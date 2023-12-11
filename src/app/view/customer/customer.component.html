@@ -1,4 +1,4 @@
-<div class="container flex constrains">
+<div class="flex constrains">
   <app-sidenav class="nav"></app-sidenav>
   <div class="content">
     <h2>Please fill in customer information</h2>
@@ -27,14 +27,8 @@
         <textarea matInput formControlName="address"></textarea>
       </mat-form-field>
 
-      <!-- <label for="region">Select Region</label>
-      <select name="region" id="">
-        <option value="ygn">Yangon</option>
-        <option value="mdy">Mandalay</option>
-      </select> -->
-
       <div class="next-btn flex">
-        <button mat-button color="primary" (click)="createPreorder()">
+        <button mat-raised-button color="primary" (click)="createPreorder()">
           Next >>
         </button>
       </div>
