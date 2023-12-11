@@ -1,0 +1,22 @@
+.search-bar {
+    padding: 0;
+}
+
+.product-container {
+    width: 60%;
+    height: auto;
+    justify-content: space-between;
+}
+
+.product {
+    width: 24%;
+}
+
+.product-img {
+    /* width: 100%; */
+}
+
+.product-img img {
+    width: 100%;
+
+}

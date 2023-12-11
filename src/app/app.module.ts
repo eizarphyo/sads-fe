@@ -18,6 +18,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,6 +44,9 @@ import { provideAnimations } from '@angular/platform-browser/animations';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatCardModule,
+    MatIconModule,
+    HttpClientModule,
   ],
   providers: [
     provideAnimations(),

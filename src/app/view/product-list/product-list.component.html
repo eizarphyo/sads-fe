@@ -1,6 +1,28 @@
 <div class="container flex constrains">
   <app-sidenav class="nav"></app-sidenav>
   <div class="content">
-    <p>product-list works!</p>
+    <div class="search-container">
+      <input type="text" placeholder="search product" />
+      <!-- <mat-form-field appearance="outline" class="search-bar">
+        <input type="text" matInput placeholder="search products" />
+      </mat-form-field> -->
+      <a mat-button><mat-icon>search</mat-icon></a>
+    </div>
+    <div class="product-container flex">
+      <mat-card class="product" *ngFor="let product of products">
+        <div class="product-img">
+          <img matCardImage [src]="product.img" alt="product image" />
+          <mat-card-content>
+            <div>{{ product.name }}</div>
+            <div>Price - {{ product.price }}</div>
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button mat-button color="primary">Add to Cart</button>
+          </mat-card-actions>
+        </div>
+      </mat-card>
+    </div>
+    <div class="cart-container"></div>
   </div>
 </div>
