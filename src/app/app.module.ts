@@ -21,6 +21,8 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon'
 import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table'
+
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatCardModule,
     MatIconModule,
     HttpClientModule,
+    MatTableModule
   ],
   providers: [
     provideAnimations(),

@@ -1,0 +1,6 @@
+table {
+  width: 100%;
+}
+.mdc-button {
+  min-width: 95px;
+}
