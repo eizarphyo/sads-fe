@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { ApiService } from '../../services/api/api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { PermitDialogComponent } from '../permit-dialog/permit-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
 
 
 const SALES_DATA: any[] = [
@@ -48,11 +50,12 @@ export class SalesTableComponent implements OnInit {
   mySalesData: any = [];
   displayedColumns: string[] = ['no', 'date', 'customerName', 'preorderNo', 'region', 'totalQty', 'totalAmount', 'status', 'transportPermit'];
 
-  dataSource = SALES_DATA;
+  dataSource = new MatTableDataSource(SALES_DATA);
 
 
   constructor(
-    private apiservice: ApiService
+    private apiservice: ApiService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -68,5 +71,14 @@ export class SalesTableComponent implements OnInit {
       },
       error => console.error("Error fetching sales data", error)
     )
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase()
+  }
+
+  openPermitDialog() {
+    this.dialog.open(PermitDialogComponent);
   }
 }

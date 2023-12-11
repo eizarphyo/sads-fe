@@ -21,7 +21,10 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon'
 import { HttpClientModule } from '@angular/common/http';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { PermitDialogComponent } from './view/permit-dialog/permit-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio'
 
 
 @NgModule({
@@ -36,6 +39,7 @@ import { MatTableModule } from '@angular/material/table'
     WarehouseTableComponent,
     LogisticsTableComponent,
     AdminTableComponent,
+    PermitDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ import { MatTableModule } from '@angular/material/table'
     MatCardModule,
     MatIconModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    MatDialogModule,
+    MatRadioModule,
   ],
   providers: [
     provideAnimations(),
