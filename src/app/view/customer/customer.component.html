@@ -1,1 +1,43 @@
-<p>customer works!</p>
+<div class="container flex constrains">
+  <app-sidenav class="nav"></app-sidenav>
+  <div class="content">
+    <h2>Please fill in customer information</h2>
+
+    <form class="form flex" [formGroup]="preorderForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Customer Name</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Phone Number</mat-label>
+        <input matInput type="number" formControlName="phone" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Select Region</mat-label>
+        <mat-select formControlName="region">
+          <mat-option value="ygn">Yangon</mat-option>
+          <mat-option value="mdy">Mandalay</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <textarea matInput formControlName="address"></textarea>
+      </mat-form-field>
+
+      <!-- <label for="region">Select Region</label>
+      <select name="region" id="">
+        <option value="ygn">Yangon</option>
+        <option value="mdy">Mandalay</option>
+      </select> -->
+
+      <div class="next-btn flex">
+        <button mat-button color="primary" (click)="createPreorder()">
+          Next >>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

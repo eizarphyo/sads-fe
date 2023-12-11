@@ -12,6 +12,20 @@ import { ProductListComponent } from './view/product-list/product-list.component
 import { SalesTableComponent } from './view/sales-table/sales-table.component';
 import { SidenavComponent } from './view/sidenav/sidenav.component';
 import { WarehouseTableComponent } from './view/warehouse-table/warehouse-table.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon'
+import { HttpClientModule } from '@angular/common/http';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
+import { PermitDialogComponent } from './view/permit-dialog/permit-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatRadioModule } from '@angular/material/radio'
+
 
 @NgModule({
   declarations: [
@@ -24,13 +38,28 @@ import { WarehouseTableComponent } from './view/warehouse-table/warehouse-table.
     FactoryTableComponent,
     WarehouseTableComponent,
     LogisticsTableComponent,
-    AdminTableComponent
+    AdminTableComponent,
+    PermitDialogComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatIconModule,
+    HttpClientModule,
+    MatTableModule,
+    MatDialogModule,
+    MatRadioModule,
   ],
-  providers: [],
+  providers: [
+    provideAnimations(),
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

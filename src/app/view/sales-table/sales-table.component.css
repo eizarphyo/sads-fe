@@ -1,0 +1,10 @@
+table {
+  width: 100%;
+}
+.mdc-button {
+  min-width: 95px;
+}
+.mat-mdc-form-field {
+  font-size: 14px;
+  width: 100%;
+}
