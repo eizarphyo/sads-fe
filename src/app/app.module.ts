@@ -24,7 +24,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { PermitDialogComponent } from './view/permit-dialog/permit-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatRadioModule } from '@angular/material/radio'
+import { MatRadioModule } from '@angular/material/radio';
+import { StatusDialogComponent } from './view/status-dialog/status-dialog.component';
+import { SalesStepperComponent } from './components/sales-stepper/sales-stepper.component';
+import { MatStepperModule } from '@angular/material/stepper'
 
 
 @NgModule({
@@ -40,6 +43,8 @@ import { MatRadioModule } from '@angular/material/radio'
     LogisticsTableComponent,
     AdminTableComponent,
     PermitDialogComponent,
+    StatusDialogComponent,
+    SalesStepperComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,6 +61,7 @@ import { MatRadioModule } from '@angular/material/radio'
     MatTableModule,
     MatDialogModule,
     MatRadioModule,
+    MatStepperModule
   ],
   providers: [
     provideAnimations(),

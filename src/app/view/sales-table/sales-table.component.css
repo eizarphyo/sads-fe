@@ -2,7 +2,7 @@ table {
   width: 100%;
 }
 .mdc-button {
-  min-width: 95px;
+  min-width: 100px;
 }
 .mat-mdc-form-field {
   font-size: 14px;
