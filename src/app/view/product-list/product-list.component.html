@@ -1,145 +1,109 @@
-<div class="flex constrains">
-  <app-sidenav class="nav"></app-sidenav>
-  <div class="content flex">
-    <div class="product-container">
-      <div class="searchbar flex mt-1 mb-3">
-        <input
-          type="text"
-          class="form-control search-field"
-          placeholder="search products"
-        />
-        <button class="btn flex justify-content-center" type="submit">
-          <mat-icon>search</mat-icon>
-        </button>
-      </div>
-      <div class="products">
-        <mat-card
-          class="product"
-          *ngFor="let product of products; let i = index"
-        >
-          <img matCardImage [src]="product.img" alt="product image" />
-          <mat-card-content class="product-details">
-            <div>{{ product.name }}</div>
-            <div class="d-flex">
-              <span class="">Price: {{ product.price }}</span>
+<div class="flex">
+  <app-sidenav></app-sidenav>
+    <div class="w-full ">
 
-              <button
-                class="add-btn"
-                mat-icon-button
-                color="primary"
-                (click)="addToCart(i)"
-              >
-                <mat-icon>shopping_cart</mat-icon>
-              </button>
+      <div class="px-4 pt-2">
+        <div class="product-container">
+          <form class=" max-w-lg mb-3">
+            <div class="relative mt-2">
+                <div class="absolute flex items-center left-6 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                    </svg>
+                </div>
+
+                <input type="search" id="search" class="block w-full py-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required>
+                <button type="submit" class="text-white absolute top-2 right-4 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
             </div>
+          </form>
 
-            <!-- <mat-card-actions>
-              <button
-                class="add-btn"
-                mat-icon-button
-                color="primary"
-                (click)="addToCart(i)"
-              >
-                <mat-icon>shopping_cart</mat-icon>
-              </button>
-            </mat-card-actions> -->
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </div>
+          <div class="products">
+            <mat-card
+              class="product h-fit"
+              *ngFor="let product of products; let i = index"
+            >
+              <img matCardImage [src]="product.img" alt="product image" />
+              <mat-card-content class="product-details p-3">
+                <div class="flex justify-between space-x-1">
+                  <div class="">
+                    <div class="mt-2 text-lg">{{ product.name }}</div>
+                    <p class=" font-medium mt-1 text-gray-500">Price : {{ product.price }}</p>
+                  </div>
+                  <button (click)="addToCart(i)" class=" bg-emerald-600 hover:bg-emerald-700 duration-150 text-white rounded-full p-2">
+                    <svg class=" w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M4.004 6.417L.762 3.174L2.176 1.76l3.243 3.242H20.66a1 1 0 0 1 .958 1.288l-2.4 8a1 1 0 0 1-.958.712H6.004v2h11v2h-12a1 1 0 0 1-1-1V6.417Zm1.5 16.585a1.5 1.5 0 1 1 0-3a1.5 1.5 0 0 1 0 3Zm12 0a1.5 1.5 0 1 1 0-3a1.5 1.5 0 0 1 0 3Z"/></svg>
+                  </button>
+                </div>
 
-    <div class="cart-container">
-      <h4>Order Items</h4>
 
-      <div class="cart-content">
-        <div class="header-g">
-          <div class="g-head">Name</div>
-          <div class="g-head">Price</div>
-          <div class="g-head">Qty</div>
-        </div>
-        <div class="order-items">
-          <ng-container *ngFor="let item of cartList; let i = index">
-            <div class="g-item">{{ item.name }}</div>
-            <div class="g-item">{{ item.total_price }}</div>
-            <div class="g-item d-flex qty-control-container">
-              <button
-                mat-icon-button
-                color="primary"
-                (click)="remove(i, item.id)"
-              >
-                <mat-icon>remove</mat-icon>
-              </button>
-
-              <input
-                [value]="item.qty"
-                class="qty-field text-center"
-                type="number"
-                min="1"
-              />
-
-              <button
-                mat-icon-button
-                color="primary"
-                class=""
-                (click)="add(i, item.id)"
-              >
-                <mat-icon>add</mat-icon>
-              </button>
-
-              <button mat-icon-button color="warn" class="" (click)="delete(i)">
-                <mat-icon color="warn">delete</mat-icon>
-              </button>
-            </div>
-          </ng-container>
-        </div>
-        <!-- <div class="order-items">
-          <div class="g-head">Name</div>
-          <div class="g-head">Price</div>
-          <div class="g-head">Qty</div>
-
-          <ng-container *ngFor="let item of cartList; let i = index">
-            <div class="g-item">{{ item.name }}</div>
-            <div class="g-item">{{ item.total_price }}</div>
-            <div class="g-item d-flex qty-control-container">
-              <button mat-icon-button class="" (click)="remove(i, item.id)">
-                <mat-icon>remove</mat-icon>
-              </button>
-
-              <input
-                [value]="item.qty"
-                class="qty-field text-center"
-                type="number"
-                min="1"
-              />
-
-              <button mat-icon-button class="" (click)="add(i, item.id)">
-                <mat-icon>add</mat-icon>
-              </button>
-
-              <button mat-icon-button color="warn" class="" (click)="delete(i)">
-                <mat-icon color="warn">delete</mat-icon>
-              </button>
-            </div>
-          </ng-container>
-        </div> -->
-
-        <div class="cart-footer">
-          <div class="totals d-grid border-top border-dashed">
-            <div class="">Total Qty:</div>
-            <div class="text-end">
-              {{ totals.total_qty > 0 ? totals.total_qty : 0 }}
-            </div>
-            <div>Total Amount:</div>
-            <div class="text-end">
-              {{ totals.total_amt > 0 ? totals.total_amt : 0 }}
-            </div>
+              </mat-card-content>
+            </mat-card>
           </div>
-          <div class="order-actions d-flex justify-content-end mt-2 mb-2">
-            <button mat-button color="primary" class="">Cancel</button>
-            <button mat-raised-button color="primary" class="">Order</button>
+        </div>
+
+        <div class="cart-container">
+          <h4>Order Items</h4>
+
+          <div class="cart-content">
+            <div class="header-g">
+              <div class="g-head">Name</div>
+              <div class="g-head">Price</div>
+              <div class="g-head">Qty</div>
+            </div>
+            <div class="order-items">
+              <ng-container *ngFor="let item of cartList; let i = index">
+                <div class="g-item">{{ item.name }}</div>
+                <div class="g-item">{{ item.total_price }}</div>
+                <div class="g-item d-flex qty-control-container">
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    (click)="remove(i, item.id)"
+                  >
+                    <mat-icon>remove</mat-icon>
+                  </button>
+
+                  <input
+                    [value]="item.qty"
+                    class="qty-field text-center"
+                    type="number"
+                    min="1"
+                  />
+
+                  <button
+                    mat-icon-button
+                    color="primary"
+                    class=""
+                    (click)="add(i, item.id)"
+                  >
+                    <mat-icon>add</mat-icon>
+                  </button>
+
+                  <button mat-icon-button color="warn" class="" (click)="delete(i)">
+                    <mat-icon color="warn">delete</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+            </div>
+
+            <div class="cart-footer">
+              <div class="totals d-grid border-top border-dashed">
+                <div class="">Total Qty:</div>
+                <div class="text-end">
+                  {{ totals.total_qty > 0 ? totals.total_qty : 0 }}
+                </div>
+                <div>Total Amount:</div>
+                <div class="text-end">
+                  {{ totals.total_amt > 0 ? totals.total_amt : 0 }}
+                </div>
+              </div>
+              <div class="order-actions d-flex justify-content-end mt-2 mb-2">
+                <button mat-button color="primary" class="">Cancel</button>
+                <button mat-raised-button color="primary" class="">Order</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
   </div>
 </div>
