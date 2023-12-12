@@ -65,14 +65,14 @@ export class SalesTableComponent implements OnInit {
     console.log(this.dataSource)
   }
 
-  loadData() {
-    this.apiservice.getSalesData().subscribe(
-      (result) => {
-        this.mySalesData = result;
-      },
-      error => console.error("Error fetching sales data", error)
-    )
-  }
+  // loadData() {
+  //   this.apiservice.getSalesData().subscribe(
+  //     (result) => {
+  //       this.mySalesData = result;
+  //     },
+  //     error => console.error("Error fetching sales data", error)
+  //   )
+  // }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
