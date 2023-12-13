@@ -22,7 +22,6 @@
           </div>
         </div>
 
-
         <mat-form-field>
           <mat-label>Search Data</mat-label>
           <input
@@ -32,9 +31,7 @@
             #input
           />
         </mat-form-field>
-
       </div>
-
 
       <!-- table data -->
       <table mat-table [dataSource]="dataSource" class="shadow-md rounded">
@@ -50,37 +47,39 @@
         <!-- Date Column -->
         <ng-container matColumnDef="date">
           <th mat-header-cell *matHeaderCellDef>Date</th>
-          <td mat-cell *matCellDef="let sale">{{ sale.date }}</td>
+          <td mat-cell *matCellDef="let sale">
+            {{ sale.date }}
+          </td>
         </ng-container>
 
         <!-- customerName Column -->
-        <ng-container matColumnDef="customerName">
+        <ng-container matColumnDef="customer_name">
           <th mat-header-cell *matHeaderCellDef>Customer Name</th>
-          <td mat-cell *matCellDef="let sale">{{ sale.customerName }}</td>
+          <td mat-cell *matCellDef="let sale">{{ sale.customer_name }}</td>
         </ng-container>
 
         <!-- preorderNo Column -->
-        <ng-container matColumnDef="preorderNo">
+        <ng-container matColumnDef="preorder_number">
           <th mat-header-cell *matHeaderCellDef>Preorder No.</th>
-          <td mat-cell *matCellDef="let sale">{{ sale.preorderNo }}</td>
+          <td mat-cell *matCellDef="let sale">{{ sale.preorder_number }}</td>
         </ng-container>
 
         <!-- Region Column -->
-        <ng-container matColumnDef="region">
+        <ng-container matColumnDef="customer_region">
           <th mat-header-cell *matHeaderCellDef>Region</th>
-          <td mat-cell *matCellDef="let sale">{{ sale.region }}</td>
+          <td mat-cell *matCellDef="let sale">{{ sale.customer_region }}</td>
         </ng-container>
 
         <!-- Total Qty Column -->
-        <ng-container matColumnDef="totalQty">
+        <ng-container matColumnDef="total_quantity">
           <th mat-header-cell *matHeaderCellDef>Total Qty</th>
-          <td mat-cell *matCellDef="let sale">{{ sale.totalQty }}</td>
+          <td mat-cell *matCellDef="let sale">{{ sale.total_quantity }}</td>
         </ng-container>
 
         <!-- Total Amount Column -->
-        <ng-container matColumnDef="totalAmount">
+        <ng-container matColumnDef="total_price">
           <th mat-header-cell *matHeaderCellDef>Total Amount</th>
-          <td mat-cell *matCellDef="let sale">{{ sale.totalAmount }}</td>
+          <td mat-cell *matCellDef="let sale">{{ sale.total_price }}</td>
         </ng-container>
 
         <!-- status Column -->
@@ -91,7 +90,7 @@
             <button
               class="dialog-btn"
               mat-raised-button
-              (click)="openStatusDialog()"
+              (click)="openStatusDialog(sale)"
             >
               {{ sale.status }}
             </button>
@@ -99,7 +98,7 @@
         </ng-container>
 
         <!-- transport Permit Column -->
-        <ng-container matColumnDef="transportPermit">
+        <ng-container matColumnDef="permit_status">
           <th mat-header-cell *matHeaderCellDef>Transport Permit</th>
 
           <td mat-cell *matCellDef="let sale">
@@ -108,13 +107,17 @@
               mat-raised-button
               (click)="openPermitDialog()"
             >
-              {{ sale.transportPermit }}
+              {{ sale.permit_status }}
             </button>
           </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="getRowData(row, $event)"
+        ></tr>
       </table>
     </div>
 

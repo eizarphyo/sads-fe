@@ -4,3 +4,8 @@ export interface Customer {
     region: string;
     phone_number: string;
 }
+
+export interface CustomerRes {
+    preorder_id: number;
+    customer_info: Customer;
+}

@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Product } from 'src/app/models/product';
 import { ApiService } from 'src/app/services/api/api.service';
 
 export interface CartList {
-  id: number,
-  name: string,
+  product_id: number,
+  product_name: string,
   total_price: number,
   qty: number
 }
@@ -16,134 +19,51 @@ export interface CartList {
 
 export class ProductListComponent {
   constructor(
+    private router: Router,
     private api: ApiService,
-  ) { }
-  products = [
-    {
-      id: 1,
-      name: 'Pineapple Pizza',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 2,
-      name: 'Burmese Bliss',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 3,
-      name: 'Golden Sunshine Tea',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 4,
-      name: 'Ginger Zing Zest',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 5,
-      name: 'Pineapple Pizza',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 6,
-      name: 'Burmese Bliss',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 7,
-      name: 'Golden Sunshine Tea',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 8,
-      name: 'Ginger Zing Zest',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 9,
-      name: 'Pineapple Pizza',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 10,
-      name: 'Burmese Bliss',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 11,
-      name: 'Golden Sunshine Tea',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 12,
-      name: 'Ginger Zing Zest',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 13,
-      name: 'Pineapple Pizza',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 14,
-      name: 'Burmese Bliss',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 15,
-      name: 'Golden Sunshine Tea',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    },
-    {
-      id: 16,
-      name: 'Ginger Zing Zest',
-      price: 1000,
-      img: '../../../assets/images/DevGeeks.png'
-    }
-  ];
+    private dialog: MatDialog,
+    // public dialogRef: MatDialogRef<OrderCompleteDialog>,
+    // @Inject(MAT_DIALOG_DATA) public data: DialogData,
 
+  ) { }
+  products: Product[] = [];
   cartList: CartList[] = [];
+
   totals = {
     total_qty: 0,
     total_amt: 0
   }
 
+  async ngOnInit() {
+    this.products = await this.api.getAllProducts();
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(ProductListComponent, {
+    });
+  }
+
   addToCart(i: number) {
     const selected: CartList = {
-      id: this.products[i].id,
-      name: this.products[i].name,
+      product_id: this.products[i].id,
+      product_name: this.products[i].product_name,
       qty: 0,
       total_price: 0
     }
 
     let cart_index = this.cartList.findIndex((item) => {
-      return item.id == this.products[i].id
+      return item.product_id == this.products[i].id
     });
 
     if (cart_index < 0) {
       selected.qty++;
-      selected.total_price = this.products[i].price;
+      selected.total_price = this.products[i].product_price;
       this.cartList.push(selected);
       let last_i = this.cartList.length - 1;
       this.increseTotalPrice(last_i, this.cartList[last_i].qty);
     } else {
       this.cartList[cart_index].qty++;
-      this.increseTotalPrice(cart_index, selected.id);
+      this.increseTotalPrice(cart_index, selected.product_id);
     }
   }
 
@@ -157,7 +77,7 @@ export class ProductListComponent {
       return product.id == product_id;
     });
 
-    this.cartList[cart_index].total_price = this.cartList[cart_index].qty * this.products[product_index].price;
+    this.cartList[cart_index].total_price = this.cartList[cart_index].qty * this.products[product_index].product_price;
     this.calculateAllTotalPriceAndQty();
   }
 
@@ -177,7 +97,7 @@ export class ProductListComponent {
       return product.id == product_id;
     });
 
-    this.cartList[cart_index].total_price -= this.products[product_index].price;
+    this.cartList[cart_index].total_price -= this.products[product_index].product_price;
     this.calculateAllTotalPriceAndQty();
 
   }
@@ -193,9 +113,29 @@ export class ProductListComponent {
     this.totals.total_qty = qty;
   }
 
-
   delete(i: number) {
     this.cartList.splice(i, 1);
     this.calculateAllTotalPriceAndQty();
+  }
+
+  async order() {
+    const preorder = {
+      preorder_id: sessionStorage.getItem('preorder_id'),
+      product_list: this.cartList,
+      // total_price: this.totals.total_amt,
+      // total_qty: this.totals.total_qty,
+    }
+    console.log(preorder);
+
+    const isCreated = await this.api.createOrderList(preorder);
+
+    if (isCreated) {
+      alert("Your order is pending");
+
+      this.router.navigateByUrl('preorder');
+
+    }
+
+
   }
 }

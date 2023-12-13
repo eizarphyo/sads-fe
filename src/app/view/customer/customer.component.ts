@@ -29,12 +29,11 @@ export class CustomerComponent {
     const cus: Customer = this.cusInfoForm.value;
 
     console.log("cus >>", cus);
-    const token = sessionStorage.getItem('token');
 
-    const cus_id = await this.api.createCustomer(cus, token!);
-    sessionStorage.setItem('cus_id', cus_id + '');
+    const preorder_id = await this.api.createCustomer(cus);
+    sessionStorage.setItem('preorder_id', preorder_id + '');
 
-    // this.router.navigateByUrl('order-items');
+    this.router.navigateByUrl('order-items');
 
   }
 }

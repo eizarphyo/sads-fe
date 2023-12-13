@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Preorder } from 'src/app/models/preorder';
 
 @Component({
   selector: 'app-sales-stepper',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./sales-stepper.component.css']
 })
 export class SalesStepperComponent {
+  @Input() data!: Preorder;
+
+  ngOnInit() {
+    const role = sessionStorage.getItem('role');
+
+    console.log(this.data);
+
+  }
 
 }

@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PermitDialogComponent } from '../permit-dialog/permit-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ApiService } from 'src/app/services/api/api.service';
+import { Preorder } from 'src/app/models/preorder';
+import * as moment from 'moment';
+import { StatusDialogComponent } from '../status-dialog/status-dialog.component';
 
 @Component({
   selector: 'app-logistics-table',
@@ -12,9 +16,10 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class LogisticsTableComponent {
   constructor(
     public dialog: MatDialog,
+    private api: ApiService,
   ) { }
 
-  displayedColumns: string[] = ['select', 'no', 'date', 'customerName', 'preorderNo', 'region', 'totalQty', 'address', 'status'];
+  displayedColumns: string[] = ['select', 'no', 'date', 'customer_name', 'preorder_number', 'customer_region', 'total_quantity', 'boxes', 'address', 'status'];
   trucks: any[] = [
     {
       id: 1,
@@ -48,20 +53,31 @@ export class LogisticsTableComponent {
     }
   ]
 
+  preorders: Preorder[] = [];
+
   selectedTruck: number = 0;
-  // date: any = {
-  //   start: new Date(),
-  //   end: new Date()
-  // }
 
   startD?: Date;
   endD?: Date;
 
-  dataSource = new MatTableDataSource(SALES_DATA);
+  dataSource = new MatTableDataSource(this.preorders);
   selection = new SelectionModel<any[]>(true, []);
-  selectedData: any[] = [];
+  // selectedData: any[] = [];
   totalBoxes = 0;
   showTrackAssignBox = false;
+
+  async ngOnInit() {
+    this.preorders = await this.api.getAllPreorders();
+    this.dataSource = new MatTableDataSource(this.preorders);
+    this.preorders.forEach(order => {
+      order.date = moment.utc(order.created_at).format('MM/DD/YYYY');
+    });
+    console.log(this.preorders);
+  }
+
+  openStatusDialog(preorder: Preorder) {
+    this.dialog.open(StatusDialogComponent, { data: preorder });
+  }
 
   assignTruck() {
     console.log(this.selectedTruck);
@@ -73,8 +89,6 @@ export class LogisticsTableComponent {
     console.log(this.startD);
     console.log(this.endD);
     // console.log(this.endD.formatGMT('yyyyMMddHHmmss'));
-
-
   }
 
   applyFilter(event: Event) {
@@ -96,12 +110,12 @@ export class LogisticsTableComponent {
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows(event: any) {
     if (event.checked) {
-      SALES_DATA.forEach((data) => {
-        this.selectedData.push(data);
-        this.selection.select(...this.dataSource.data);
+      this.preorders.forEach((data) => {
+        // this.selectedData.push(data);
+        // this.selection.select(...this.dataSource.data);
       });
     } else {
-      this.selectedData = [];
+      // this.selectedData = [];
       this.selection.clear();
     }
     this.updateQty();
@@ -123,7 +137,7 @@ export class LogisticsTableComponent {
   updateQty() {
     let total = 0
     this.selection.selected.forEach((data: any) => {
-      total += data.totalQty;
+      total += data.total_quantity;
     });
     this.totalBoxes = total;
 
@@ -134,34 +148,39 @@ export class LogisticsTableComponent {
   }
 }
 
+
+
 const SALES_DATA: any[] = [
   {
     no: 1,
     date: "2023-01-01",
-    customerName: "John Doe",
-    preorderNo: "PO12345",
+    customer_name: "John Doe",
+    preorder_number: "PO12345",
     region: "North",
-    totalQty: 100,
+    total_quantity: 100,
+    boxes: 10,
     address: "Bandula Street",
     status: "Shipped",
   },
   {
     no: 2,
     date: "2023-02-05",
-    customerName: "Jane Smith",
-    preorderNo: "PO67890",
+    customer_name: "Jane Smith",
+    preorder_number: "PO67890",
     region: "South",
-    totalQty: 75,
+    total_quantity: 75,
+    boxes: 10,
     address: "Bandula Street",
     status: "Processing",
   },
   {
     no: 3,
     date: "2023-03-10",
-    customerName: "Bob Johnson",
-    preorderNo: "PO54321",
+    customer_name: "Bob Johnson",
+    preorder_number: "PO54321",
     region: "West",
-    totalQty: 120,
+    total_quantity: 120,
+    boxes: 10,
     address: "Lanmadaw Street",
     status: "Delivered",
   }

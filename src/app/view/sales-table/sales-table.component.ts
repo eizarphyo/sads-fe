@@ -5,6 +5,8 @@ import { PermitDialogComponent } from '../permit-dialog/permit-dialog.component'
 import { MatTableDataSource } from '@angular/material/table';
 import { StatusDialogComponent } from '../status-dialog/status-dialog.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { Preorder } from 'src/app/models/preorder';
+import * as moment from 'moment';
 
 const SALES_DATA: any[] = [
   {
@@ -49,20 +51,33 @@ const SALES_DATA: any[] = [
 export class SalesTableComponent implements OnInit {
 
   mySalesData: any = [];
-  displayedColumns: string[] = ['no', 'date', 'customerName', 'preorderNo', 'region', 'totalQty', 'totalAmount', 'status', 'transportPermit'];
+  preorders: Preorder[] = [];
+  displayedColumns: string[] = ['no', 'date', 'customer_name', 'preorder_number', 'customer_region', 'total_quantity', 'total_price', 'status', 'permit_status'];
 
-  dataSource = new MatTableDataSource(SALES_DATA);
-
+  // dataSource = new MatTableDataSource(SALES_DATA);
+  dataSource = new MatTableDataSource(this.preorders);
 
   constructor(
-    private apiservice: ApiService,
-    public dialog: MatDialog
+    private api: ApiService,
+    public dialog: MatDialog,
+
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     // this.loadData();
-    console.log(SALES_DATA);
-    console.log(this.dataSource)
+    // console.log(SALES_DATA);
+    this.preorders = await this.api.getAllPreorders();
+    console.log(this.preorders);
+
+    this.preorders.forEach(order => {
+      order.created_at = new Date(order.created_at);
+      order.date = moment.utc(order.created_at).format('MM/DD/YYYY');
+    });
+    this.dataSource = new MatTableDataSource(this.preorders);
+  }
+
+  getRowData(row: Preorder, evt: any): void {
+    console.log(row, evt);
   }
 
   // loadData() {
@@ -83,7 +98,7 @@ export class SalesTableComponent implements OnInit {
     this.dialog.open(PermitDialogComponent);
   }
 
-  openStatusDialog() {
-    this.dialog.open(StatusDialogComponent)
+  openStatusDialog(preorder: Preorder) {
+    this.dialog.open(StatusDialogComponent, { data: preorder })
   }
 }

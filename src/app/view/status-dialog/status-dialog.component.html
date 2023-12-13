@@ -1,7 +1,52 @@
 <div class="status-dialog">
   <h1 mat-dialog-title>Transition State</h1>
-  <app-sales-stepper></app-sales-stepper>
+  <mat-dialog-content>
+    <app-sales-stepper [data]="data"></app-sales-stepper>
+  </mat-dialog-content>
 
-  <h1 mat-dialog-title>Change Status to</h1>
-  <button mat-raised-button>Accept Order</button>
+  <h1 mat-dialog-title class="tx-lg">Change Status to</h1>
+  <mat-dialog-content>
+    <!-- <mat-radio-button [disabled]="true" *ngFor="let status of status">{{
+      status
+    }}</mat-radio-button> -->
+
+    <mat-radio-button
+      [disabled]="role != 'sales'"
+      [(ngModel)]="selectedStatus"
+      ngDefaultControl="selectedStatus"
+      value="accept"
+      >Accept Order</mat-radio-button
+    >
+    <mat-radio-button
+      [disabled]="role != 'warehouse'"
+      [(ngModel)]="selectedStatus"
+      ngDefaultControl="selectedStatus"
+      value="ready"
+      >Stock Ready</mat-radio-button
+    >
+    <mat-radio-button
+      [disabled]="role != 'logistics'"
+      [(ngModel)]="selectedStatus"
+      ngDefaultControl="selectedStatus"
+      value="shipping"
+      >Shipping</mat-radio-button
+    >
+    <mat-radio-button
+      [disabled]="role != 'logistics'"
+      [(ngModel)]="selectedStatus"
+      ngDefaultControl="selectedStatus"
+      value="delivered"
+      >Delivered</mat-radio-button
+    >
+    <mat-radio-button
+      [disabled]="role != 'logistics'"
+      [(ngModel)]="selectedStatus"
+      ngDefaultControl="selectedStatus"
+      value="cancelled"
+      >Cancelled</mat-radio-button
+    >
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button (click)="changeStatus()" mat-raised-button>Change</button>
+  </mat-dialog-actions>
 </div>

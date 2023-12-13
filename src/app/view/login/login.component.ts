@@ -34,6 +34,7 @@ export class LoginComponent {
     // call api and create preorder
     const res: LoginRes = await this.auth.login(user);
     sessionStorage.setItem('token', res.token);
+    sessionStorage.setItem('role', res.user.role);
     this.router.navigateByUrl('preorder');
   }
 
