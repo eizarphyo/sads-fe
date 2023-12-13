@@ -47,12 +47,33 @@ export class LogisticsTableComponent {
       driver: "Kyaw Kyaw"
     }
   ]
+
+  selectedTruck: number = 0;
+  // date: any = {
+  //   start: new Date(),
+  //   end: new Date()
+  // }
+
+  startD?: Date;
+  endD?: Date;
+
   dataSource = new MatTableDataSource(SALES_DATA);
   selection = new SelectionModel<any[]>(true, []);
   selectedData: any[] = [];
   totalBoxes = 0;
   showTrackAssignBox = false;
 
+  assignTruck() {
+    console.log(this.selectedTruck);
+  }
+
+  dateChanged(event: any) {
+    // console.log(event);s
+    // console.log(this.date);
+    console.log(this.startD);
+    console.log(this.endD);
+
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

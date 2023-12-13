@@ -27,7 +27,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,6 +57,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatDialogModule,
     MatRadioModule,
     MatCheckboxModule,
+    FormsModule
+    ,
   ],
   providers: [
     provideAnimations(),
