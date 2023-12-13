@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { PermitDialogComponent } from '../permit-dialog/permit-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { StatusDialogComponent } from '../status-dialog/status-dialog.component';
-
+import { MatPaginator } from '@angular/material/paginator';
 
 const SALES_DATA: any[] = [
   {

@@ -99,7 +99,7 @@
                   <label
                     for="countries"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                    >Select avaliable truck</label
+                    >Select available truck</label
                   >
                   <select
                     id="countries"
@@ -142,18 +142,6 @@
             #input
           />
         </mat-form-field>
-
-        <ng-container *ngIf="selection.hasValue()">
-          <div>{{ totalBoxes }} Boxes Pcs</div>
-          <mat-form-field>
-            <mat-label>Select Track</mat-label>
-            <mat-select>
-              <mat-option value="1">C1-0381</mat-option>
-              <mat-option value="2">J4-2381</mat-option>
-              <mat-option value="3">B8-3481</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
       </div>
 
       <!-- table data -->
@@ -226,7 +214,7 @@
           <th mat-header-cell *matHeaderCellDef>Status</th>
           <td mat-cell *matCellDef="let sale">
             <!-- <button mat-raised-button (click)="openDialog()"> -->
-            <button mat-raised-button>
+            <button class="dialog-btn" mat-raised-button>
               {{ sale.status }}
             </button>
           </td>
@@ -237,7 +225,11 @@
           <th mat-header-cell *matHeaderCellDef>Transport Permit</th>
 
           <td mat-cell *matCellDef="let sale">
-            <button mat-raised-button (click)="openPermitDialog()">
+            <button
+              class="dialog-btn"
+              mat-raised-button
+              (click)="openPermitDialog()"
+            >
               {{ sale.transportPermit }}
             </button>
           </td>
@@ -247,5 +239,10 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
       </table>
     </div>
+    <mat-paginator
+      [length]="100"
+      [pageSize]="10"
+      aria-label="Select page"
+    ></mat-paginator>
   </div>
 </div>
