@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ApiService } from 'src/app/services/api/api.service';
 
 export interface CartList {
   id: number,
@@ -14,6 +15,9 @@ export interface CartList {
 })
 
 export class ProductListComponent {
+  constructor(
+    private api: ApiService,
+  ) { }
   products = [
     {
       id: 1,

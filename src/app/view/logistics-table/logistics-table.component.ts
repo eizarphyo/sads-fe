@@ -72,6 +72,8 @@ export class LogisticsTableComponent {
     // console.log(this.date);
     console.log(this.startD);
     console.log(this.endD);
+    // console.log(this.endD.formatGMT('yyyyMMddHHmmss'));
+
 
   }
 

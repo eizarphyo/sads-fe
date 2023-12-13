@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Customer } from 'src/app/models/customer';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-customer',
@@ -10,19 +12,29 @@ import { Router } from '@angular/router';
 export class CustomerComponent {
   constructor(
     private router: Router,
+    private api: ApiService,
   ) { }
 
-  preorderForm: FormGroup = new FormGroup({
+  cusInfoForm: FormGroup = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required]),
+    phone_number: new FormControl('', [Validators.required]),
     region: new FormControl('', [Validators.required]),
     address: new FormControl('', [Validators.required]),
   });
 
-  createPreorder() {
-    // call api and create preorder
-    this.router.navigateByUrl('order-items');
-    console.log(this.preorderForm.value);
+  regions: string[] = ['Yangon', 'Mandalay', 'Naypyitaw'];
+
+  async createCus() {
+    console.log(this.cusInfoForm.value);
+    const cus: Customer = this.cusInfoForm.value;
+
+    console.log("cus >>", cus);
+    const token = sessionStorage.getItem('token');
+
+    const cus_id = await this.api.createCustomer(cus, token!);
+    sessionStorage.setItem('cus_id', cus_id + '');
+
+    // this.router.navigateByUrl('order-items');
 
   }
 }
