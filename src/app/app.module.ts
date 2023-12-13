@@ -25,6 +25,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { PermitDialogComponent } from './view/permit-dialog/permit-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatRadioModule } from '@angular/material/radio'
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { MatRadioModule } from '@angular/material/radio'
     MatTableModule,
     MatDialogModule,
     MatRadioModule,
+    MatCheckboxModule,
   ],
   providers: [
     provideAnimations(),
