@@ -15,7 +15,7 @@ const SALES_DATA: any[] = [
     region: "North",
     totalQty: 100,
     totalAmount: 1500.00,
-    status: "Shipped",
+    status: "Pending",
     transportPermit: "Pending"
   },
   {
@@ -26,7 +26,7 @@ const SALES_DATA: any[] = [
     region: "South",
     totalQty: 75,
     totalAmount: 1200.50,
-    status: "Processing",
+    status: "Accepted",
     transportPermit: "Accepted"
   },
   {
@@ -37,7 +37,7 @@ const SALES_DATA: any[] = [
     region: "West",
     totalQty: 120,
     totalAmount: 2000.75,
-    status: "Delivered",
+    status: "Accepted",
     transportPermit: "Requested"
   }
 ];

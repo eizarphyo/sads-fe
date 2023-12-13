@@ -2,8 +2,8 @@
   flex-direction: column;
 }
 
-.mdc-button {
-  min-width: 95px;
+.mdc-button.permit-btn {
+  min-width: 120px;
   /* margin-left: 0; */
   margin-bottom: 15px;
 }

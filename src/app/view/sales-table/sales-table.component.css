@@ -5,8 +5,8 @@
 table {
   width: 100%;
 }
-.mdc-button {
-  min-width: 100px;
+.mdc-button.dialog-btn {
+  min-width: 110px;
 }
 .mat-mdc-form-field {
   font-size: 14px;
