@@ -32,7 +32,7 @@ export class LoginComponent {
     }
 
     // call api and create preorder
-    await this.auth.login(user);
+    // await this.auth.login(user);
 
     this.router.navigateByUrl('preorder');
     console.log(this.loginForm.value);

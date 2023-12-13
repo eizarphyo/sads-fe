@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PermitDialogComponent } from '../permit-dialog/permit-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { SelectionModel } from '@angular/cdk/collections';
+import { StatusDialogComponent } from '../status-dialog/status-dialog.component';
 
 @Component({
   selector: 'app-logistics-table',
@@ -63,6 +64,9 @@ export class LogisticsTableComponent {
     this.dialog.open(PermitDialogComponent);
   }
 
+  openStatusDialog() {
+    this.dialog.open(StatusDialogComponent)
+  }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
