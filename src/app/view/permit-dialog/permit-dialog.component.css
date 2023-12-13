@@ -1,22 +1,13 @@
-/* .mat-mdc-radio-button ~ .mat-mdc-radio-button {
-  margin-left: 16px;
-}
-
-.mdc-dialog__surface {
-  overflow-y: hidden !important;
-}
-h1 {
-  font-size: 20px;
-}
-.permit-container {
-  padding: 20px;
-}
-
-.button-container {
-  display: flex;
+.mdc-dialog__actions {
   flex-direction: column;
 }
 
-.button-container button {
+.mdc-button.permit-btn {
+  min-width: 120px;
+  /* margin-left: 0; */
   margin-bottom: 15px;
-} */
+}
+
+.mat-mdc-dialog-actions .mat-mdc-button-base + .mat-mdc-button-base {
+  margin-left: 0;
+}

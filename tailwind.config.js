@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#43a047",
+        fade: "#6f6f6fab"
       },
       // fontFamily: {
       //   orelega: ["Orelega One", "serif"],

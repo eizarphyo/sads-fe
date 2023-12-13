@@ -1,1 +1,3 @@
-export var apiHost = 'http://127.0.0.1/api';
+
+export var apiHost: string = "http://127.0.0.1:8000/api";
+

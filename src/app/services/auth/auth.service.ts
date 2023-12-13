@@ -12,27 +12,27 @@ export class AuthService {
 
   ) { }
 
-  login(user: any) {
-    // const httpOptions = {
-    //   headers: new HttpHeaders({
-    //     "Content-Type": "application/json",
-    //     "Access-Control-Allow-Origin": "*"
 
-    //   })
-    // }
-    return new Promise((resolve, reject) =>  {
-      this.http.post(`${apiHost}/login`, user).subscribe({
+  login(body: any) {
+    const corsOption = {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*'
+      })
+    }
 
-        next: (res: any) => {
-        console.log(res.statusCode);
-          resolve(res);
-        }, error: (error: any) => {
-          console.log('>>>>', error);
-
-          reject(error);
-        }
+    this.http.post(`${apiHost}/login`, body).subscribe((res) => {
+      console.log('api response >>', res);
     })
-    } )
+
+    // return new Promise((resolve, reject) => {
+    //   this.http.post(`${apiHost}`, body, corsOption).subscribe({
+    //     next: (res: any) => {
+    //       resolve(res);
+    //     }, error: (error: any) => {
+    //       reject(error);
+    //     }
+    //   })
+    // })
 
   }
 }

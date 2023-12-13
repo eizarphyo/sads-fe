@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { apiHost } from 'src/utils/utils';
 // import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,5 +16,9 @@ export class ApiService {
 
   getSalesData() {
     return this.http.get(this.salesUrl)
+  }
+
+  createPreorder(body: any) {
+    this.http.post(`${apiHost}/preorder`, body);
   }
 }
