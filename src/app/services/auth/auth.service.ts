@@ -20,5 +20,16 @@ export class AuthService {
         resolve(res);
       })
     })
+
+    // return new Promise((resolve, reject) => {
+    //   this.http.post(`${apiHost}`, body, corsOption).subscribe({
+    //     next: (res: any) => {
+    //       resolve(res);
+    //     }, error: (error: any) => {
+    //       reject(error);
+    //     }
+    //   })
+    // })
+
   }
 }

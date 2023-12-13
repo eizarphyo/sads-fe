@@ -1,10 +1,11 @@
+
 import { HttpHeaders } from '@angular/common/http';
-import { Token } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRes } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
   });
+
 
   async submitLoginForm() {
 

@@ -29,6 +29,7 @@ import { StatusDialogComponent } from './view/status-dialog/status-dialog.compon
 import { SalesStepperComponent } from './components/sales-stepper/sales-stepper.component';
 import { MatStepperModule } from '@angular/material/stepper'
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -63,8 +64,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatRadioModule,
     MatStepperModule,
     MatCheckboxModule,
-    FormsModule
-    ,
+    FormsModule,
+    MatPaginatorModule
   ],
   providers: [
     provideAnimations(),
