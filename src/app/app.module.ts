@@ -28,6 +28,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { StatusDialogComponent } from './view/status-dialog/status-dialog.component';
 import { SalesStepperComponent } from './components/sales-stepper/sales-stepper.component';
 import { MatStepperModule } from '@angular/material/stepper'
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -61,7 +62,8 @@ import { MatStepperModule } from '@angular/material/stepper'
     MatTableModule,
     MatDialogModule,
     MatRadioModule,
-    MatStepperModule
+    MatStepperModule,
+    MatCheckboxModule,
   ],
   providers: [
     provideAnimations(),
