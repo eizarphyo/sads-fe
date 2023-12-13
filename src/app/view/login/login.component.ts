@@ -1,8 +1,11 @@
+
 import { HttpHeaders } from '@angular/common/http';
+
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth/auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -20,6 +23,7 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required]),
   });
 
+
   async submitLoginForm() {
 
     const user = {
@@ -29,6 +33,7 @@ export class LoginComponent {
 
     // call api and create preorder
     await this.auth.login(user);
+
     this.router.navigateByUrl('preorder');
     console.log(this.loginForm.value);
 
