@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 import { SalesStepperComponent } from 'src/app/components/sales-stepper/sales-stepper.component';
 import { Preorder } from 'src/app/models/preorder';
@@ -14,10 +14,11 @@ export class StatusDialogComponent {
   constructor
     (
       @Inject(MAT_DIALOG_DATA) public data: Preorder,
+      private dialogRef: MatDialogRef<StatusDialogComponent>,
       private api: ApiService,
     ) { }
 
-  status: string[] = ['Accept Order', 'Stock Ready', 'Shipping', 'Delivered', 'Canclled']
+  status: string[] = ['Accept Order', 'Stock Ready', 'Shipping', 'Delivered', 'Cancelled']
   role: string = '';
   selectedStatus = '';
 
@@ -36,6 +37,6 @@ export class StatusDialogComponent {
     }
 
     await this.api.changeOrderStatus(body);
-
+    this.dialogRef.close();
   }
 }

@@ -9,6 +9,8 @@ import { WarehouseTableComponent } from './view/warehouse-table/warehouse-table.
 import { LogisticsTableComponent } from './view/logistics-table/logistics-table.component';
 import { AdminTableComponent } from './view/admin-table/admin-table.component';
 import { SidenavComponent } from './view/sidenav/sidenav.component';
+import { AuthGuard } from './guards/auth.guard';
+import { UserGuard } from './guards/user.guard';
 
 const routes: Routes = [
   {
@@ -23,6 +25,7 @@ const routes: Routes = [
   {
     path: 'preorder',
     component: CustomerComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'preorder/:id',
@@ -31,6 +34,7 @@ const routes: Routes = [
   {
     path: 'order-items',
     component: ProductListComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'update-order/:id',
@@ -39,26 +43,32 @@ const routes: Routes = [
   {
     path: 'sales',
     component: SalesTableComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'factory',
     component: FactoryTableComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'warehouse',
     component: WarehouseTableComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'logistics',
     component: LogisticsTableComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'admin',
     component: AdminTableComponent,
-  }, {
-    path: 'sidenav',
-    component: SidenavComponent
-  }
+    canActivate: [AuthGuard],
+  },
+  // {
+  //   path: 'sidenav',
+  //   component: SidenavComponent
+  // }
 ];
 
 @NgModule({

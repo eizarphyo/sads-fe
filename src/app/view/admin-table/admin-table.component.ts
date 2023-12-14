@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
+import { Preorder } from 'src/app/models/preorder';
+import { ApiService } from 'src/app/services/api/api.service';
 
 
 const ADMIN_DATA: any[] = [
@@ -37,10 +40,31 @@ const ADMIN_DATA: any[] = [
   styleUrls: ['./admin-table.component.css']
 })
 export class AdminTableComponent {
+  constructor(
+    private api: ApiService,
+  ) { }
   myAdminData: any = [];
-  displayedColumns: string[] = ['no', 'date', 'customerName', 'preorderNo', 'region', 'totalQty', 'totalAmount']
+  displayedColumns: string[] = ['no', 'date', 'customer_name', 'preorder_number', 'customer_region', 'total_quantity', 'total_price', 'status']
 
-  dataSource = new MatTableDataSource(ADMIN_DATA);
+  preorders: Preorder[] = [];
+  dataSource = new MatTableDataSource(this.preorders);
+
+  ngOnInit() {
+    this.loadPreorderData();
+  }
+
+  async loadPreorderData() {
+    this.preorders = await this.api.getAllPreorders();
+    this.dataSource = new MatTableDataSource(this.preorders);
+    this.preorders.forEach(order => {
+      order.date = moment.utc(order.created_at).format('MM/DD/YYYY');
+    });
+
+    this.preorders = this.preorders.sort((a: Preorder, b: Preorder) => {
+      return a.id - b.id;
+    });
+  }
+
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

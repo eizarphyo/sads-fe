@@ -36,6 +36,10 @@ export class ProductListComponent {
 
   async ngOnInit() {
     this.products = await this.api.getAllProducts();
+
+    this.products = this.products.sort((a, b) => {
+      return a.id - b.id;
+    })
   }
 
   openDialog() {
@@ -43,23 +47,59 @@ export class ProductListComponent {
     });
   }
 
-  addToCart(i: number) {
+  // addToCart(i: number) {
+  //   const selected: CartList = {
+  //     product_id: this.products[i].id,
+  //     product_name: this.products[i].product_name,
+  //     order_count: 0,
+  //     total_price: 0
+  //   }
+
+  //   let cart_index = this.cartList.findIndex((item) => {
+  //     return item.product_id == this.products[i].id
+  //   });
+
+  //   if (cart_index < 0) {
+  //     console.log(this.products[i]);
+
+  //     selected.order_count++;
+  //     selected.total_price = this.products[i].product_price;
+  //     this.cartList.push(selected);
+  //     let last_i = this.cartList.length - 1;
+  //     this.increseTotalPrice(last_i, this.cartList[last_i].order_count);
+  //   } else {
+  //     this.cartList[cart_index].order_count++;
+  //     this.increseTotalPrice(cart_index, selected.product_id);
+  //   }
+  // }
+
+  addToCart(id: number) {
+
+    const index = this.products.findIndex((product) => {
+      return product.id == id;
+    });
+    console.log(this.products[index]);
+
+
     const selected: CartList = {
-      product_id: this.products[i].id,
-      product_name: this.products[i].product_name,
+      product_id: id,
+      product_name: this.products[index].product_name,
       order_count: 0,
       total_price: 0
     }
 
     let cart_index = this.cartList.findIndex((item) => {
-      return item.product_id == this.products[i].id
+      return item.product_id == id;
     });
 
     if (cart_index < 0) {
       selected.order_count++;
-      selected.total_price = this.products[i].product_price;
+      selected.total_price = this.products[index].product_price;
+
       this.cartList.push(selected);
+
       let last_i = this.cartList.length - 1;
+
       this.increseTotalPrice(last_i, this.cartList[last_i].order_count);
     } else {
       this.cartList[cart_index].order_count++;
@@ -137,7 +177,21 @@ export class ProductListComponent {
       this.router.navigateByUrl('preorder');
 
     }
+  }
+
+  deleteAllSelectedItems() {
+    this.cartList = [];
+  }
+
+  updateTotalPrice(str: any, i: number, id: number) {
+    const product_i = this.products.findIndex((product) => {
+      return product.id == id;
+    });
+    console.log(str);
 
 
+    // const qty: any = parseInt(str);
+
+    // this.cartList[i].total_price = this.products[product_i].product_price * qty;
   }
 }

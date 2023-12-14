@@ -65,18 +65,32 @@ export class LogisticsTableComponent {
   // selectedData: any[] = [];
   totalBoxes = 0;
   showTrackAssignBox = false;
+  role: string = '';
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.role = sessionStorage.getItem('role')!;
+
+    this.loadPreorderData();
+  }
+
+  async loadPreorderData() {
     this.preorders = await this.api.getAllPreorders();
     this.dataSource = new MatTableDataSource(this.preorders);
     this.preorders.forEach(order => {
       order.date = moment.utc(order.created_at).format('MM/DD/YYYY');
     });
-    console.log(this.preorders);
+
+    this.preorders = this.preorders.sort((a: Preorder, b: Preorder) => {
+      return a.id - b.id;
+    });
   }
 
   openStatusDialog(preorder: Preorder) {
-    this.dialog.open(StatusDialogComponent, { data: preorder });
+    const dialogRef = this.dialog.open(StatusDialogComponent, { data: preorder });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadPreorderData();
+    });
   }
 
   assignTruck() {
@@ -146,6 +160,8 @@ export class LogisticsTableComponent {
   toggleTrackAssignBox() {
     this.showTrackAssignBox = !this.showTrackAssignBox;
   }
+
+
 }
 
 

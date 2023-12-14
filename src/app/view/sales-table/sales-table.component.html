@@ -41,7 +41,7 @@
         <!-- No. Column -->
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef>No.</th>
-          <td mat-cell *matCellDef="let sale">{{ sale.no }}</td>
+          <td mat-cell *matCellDef="let sale">{{ sale.id }}</td>
         </ng-container>
 
         <!-- Date Column -->
@@ -90,9 +90,10 @@
             <button
               class="dialog-btn"
               mat-raised-button
+              [disabled]="sale.status != 'pending' || role != 'sales'"
               (click)="openStatusDialog(sale)"
             >
-              {{ sale.status }}
+              {{ sale.status | titlecase }}
             </button>
           </td>
         </ng-container>
@@ -102,13 +103,16 @@
           <th mat-header-cell *matHeaderCellDef>Transport Permit</th>
 
           <td mat-cell *matCellDef="let sale">
-            <button
-              class="dialog-btn"
-              mat-raised-button
-              (click)="openPermitDialog()"
-            >
-              {{ sale.permit_status }}
-            </button>
+            <ng-container *ngIf="sale.customer_region != 'Yangon'">
+              <button
+                class="dialog-btn"
+                mat-raised-button
+                [disabled]="role != 'sales'"
+                (click)="openPermitDialog(sale)"
+              >
+                {{ sale.permit_status | titlecase }}
+              </button>
+            </ng-container>
           </td>
         </ng-container>
 

@@ -183,7 +183,7 @@
         <!-- No. Column -->
         <ng-container matColumnDef="no">
           <th mat-header-cell *matHeaderCellDef>No.</th>
-          <td mat-cell *matCellDef="let sale">{{ sale.no }}</td>
+          <td mat-cell *matCellDef="let sale">{{ sale.id }}</td>
         </ng-container>
 
         <!-- Date Column -->
@@ -234,29 +234,38 @@
           <td mat-cell *matCellDef="let sale">
             <!-- <button mat-raised-button (click)="openDialog()"> -->
             <button
+              *ngIf="sale.status != 'accepted' && sale.status != 'pending'"
+              [disabled]="
+                role != 'logistic' ||
+                sale.status == 'delivered' ||
+                sale.status == 'cancelled'
+              "
               (click)="openStatusDialog(sale)"
               class="dialog-btn"
               mat-raised-button
             >
-              {{ sale.status }}
+              {{ sale.status | titlecase }}
             </button>
-          </td>
-        </ng-container>
-
-        <!-- transport Permit Column -->
-        <ng-container matColumnDef="transportPermit">
-          <th mat-header-cell *matHeaderCellDef>Transport Permit</th>
-
-          <td mat-cell *matCellDef="let sale">
             <button
+              [disabled]="true"
+              *ngIf="sale.status == 'pending' || sale.status == 'accepted'"
               class="dialog-btn"
               mat-raised-button
-              (click)="openPermitDialog()"
             >
-              {{ sale.transportPermit }}
+              {{ sale.status | titlecase }}
             </button>
           </td>
         </ng-container>
+
+        <!-- Remark Column -->
+        <!-- <ng-container matColumnDef="remark">
+          <th mat-header-cell *matHeaderCellDef>Remark</th>
+          <td mat-cell *matCellDef="let sale">
+            <mat-form-field>
+              <input type="text" mat-input />
+            </mat-form-field>
+          </td>
+        </ng-container> -->
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>

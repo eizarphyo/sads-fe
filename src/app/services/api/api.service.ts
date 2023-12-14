@@ -80,6 +80,17 @@ export class ApiService {
     })
   }
 
+  changePermitStatus(body: any): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${apiHost}/changePermitStatus`, body, this.header).subscribe((res: any) => {
+        console.log('permit status changed >>', res);
+        if (res.status == 'success') {
+          resolve(true);
+        }
+      })
+    })
+  }
+
   createPreorder(body: any) {
     this.http.post(`${apiHost}/preorder`, body);
   }
