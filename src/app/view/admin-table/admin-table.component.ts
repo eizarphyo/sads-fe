@@ -46,4 +46,10 @@ export class AdminTableComponent {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase()
   }
+
+  getTotalAmount() {
+    return this.myAdminData.map((t: any) => t.totalAmount).reduce((acc: any, value: any) => acc + value, 0);
+  }
+  getTotalQty() { return this.myAdminData.map((t: any) => t.totalQty).reduce((acc: any, value: any) => acc + value, 0); }
+
 }
