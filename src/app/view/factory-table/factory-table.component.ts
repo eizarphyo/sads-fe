@@ -35,9 +35,7 @@ export class FactoryTableComponent {
 
   dataSource = new MatTableDataSource(FACTORY_DATA);
 
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase()
+  getTotalRawMaterials() {
+    return FACTORY_DATA.map((data: any) => data.totalQty).reduce((a: any, b: any) => a + b, 0);
   }
 }

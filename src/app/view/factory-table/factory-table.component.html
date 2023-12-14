@@ -1,10 +1,10 @@
 <div class="flex">
   <app-sidenav></app-sidenav>
   <div class="w-full">
-    <div class="px-5">
+    <div class="px-5 pt-3">
       <!-- table show -->
 
-      <!-- calendar control -->
+      <!-- calendar control & Data retrieve-->
       <div class="flex justify-between">
         <!-- calendar control  -->
         <div class="flex items-center mb-5">
@@ -25,16 +25,10 @@
           </div>
         </div>
 
-        <!-- search -->
-        <mat-form-field>
-          <mat-label>Search Data</mat-label>
-          <input
-            matInput
-            (keyup)="applyFilter($event)"
-            placeholder="Ex. ium"
-            #input
-          />
-        </mat-form-field>
+        <!-- Estimated Raw materials -->
+        <h4 class="header-material">
+          Estimated Raw Materials: <span>{{ getTotalRawMaterials() }}</span>
+        </h4>
       </div>
 
       <div class="data-table">
