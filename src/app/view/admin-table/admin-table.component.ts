@@ -30,6 +30,79 @@ const ADMIN_DATA: any[] = [
     totalQty: 120,
     totalAmount: 230
   }
+  ,
+  {
+    no: 3,
+    date: "2023-03-10",
+    customerName: "David",
+    preorderNo: "PO54321",
+    region: "West",
+    totalQty: 120,
+    totalAmount: 230
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    customerName: "David",
+    preorderNo: "PO54321",
+    region: "West",
+    totalQty: 120,
+    totalAmount: 230
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    customerName: "David",
+    preorderNo: "PO54321",
+    region: "West",
+    totalQty: 120,
+    totalAmount: 230
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    customerName: "David",
+    preorderNo: "PO54321",
+    region: "West",
+    totalQty: 120,
+    totalAmount: 230
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    customerName: "David",
+    preorderNo: "PO54321",
+    region: "West",
+    totalQty: 120,
+    totalAmount: 230
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    customerName: "David",
+    preorderNo: "PO54321",
+    region: "West",
+    totalQty: 120,
+    totalAmount: 230
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    customerName: "David",
+    preorderNo: "PO54321",
+    region: "West",
+    totalQty: 120,
+    totalAmount: 230
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    customerName: "David",
+    preorderNo: "PO54321",
+    region: "West",
+    totalQty: 120,
+    totalAmount: 230
+  }
 ];
 @Component({
   selector: 'app-admin-table',
@@ -48,8 +121,8 @@ export class AdminTableComponent {
   }
 
   getTotalAmount() {
-    return this.myAdminData.map((t: any) => t.totalAmount).reduce((acc: any, value: any) => acc + value, 0);
+    return ADMIN_DATA.map((t: any) => t.totalAmount).reduce((acc: any, value: any) => acc + value, 0);
   }
-  getTotalQty() { return this.myAdminData.map((t: any) => t.totalQty).reduce((acc: any, value: any) => acc + value, 0); }
+  getTotalQty() { return ADMIN_DATA.map((t: any) => t.totalQty).reduce((acc: any, value: any) => acc + value, 0); }
 
 }

@@ -88,6 +88,18 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
       </div>
+
+      <article class="total">
+        <div class="total-header">
+          <h4 class="">Total Amount:</h4>
+          <h4>Total Quantity:</h4>
+        </div>
+
+        <div class="total-amount">
+          <p>{{ getTotalAmount() }} Ks</p>
+          <p>{{ getTotalQty() }}</p>
+        </div>
+      </article>
     </div>
   </div>
 </div>
