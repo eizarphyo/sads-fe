@@ -119,15 +119,28 @@ export class WarehouseTableComponent {
     private dialog: MatDialog,
   ) { }
   myLogisticData: any = [];
-  displayedColumns: string[] = ['no', 'date', 'preorder_number', 'item', 'total_quantity', 'order_box', 'status'];
+  displayedColumns: string[] = ['no', 'date', 'preorder_number', 'total_quantity', 'order_box', 'status'];
   preorders: Preorder[] = [];
 
   dataSource = new MatTableDataSource(this.preorders);
   role: string = '';
 
+  filter: any = {
+    startDate: '',
+    endDate: '',
+    dept: 'admin'
+  }
+
   ngOnInit() {
     this.role = sessionStorage.getItem('role')!;
     this.loadPreorderData();
+  }
+
+  async filterByDate() {
+    if (this.filter.startDate != '' && this.filter.endDate != '') {
+      this.preorders = await this.api.getOrdersByCalendarCtl(this.filter);
+      this.dataSource = new MatTableDataSource(this.preorders);
+    }
   }
 
   async loadPreorderData() {

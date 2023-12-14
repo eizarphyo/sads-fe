@@ -7,6 +7,8 @@
         <div class="flex items-center mb-5">
           <div class="relative">
             <input
+              [(ngModel)]="filter.startDate"
+              (change)="filterByDate()"
               type="date"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Select date end"
@@ -15,6 +17,8 @@
           <span class="mx-4 text-gray-500">to</span>
           <div class="relative">
             <input
+              [(ngModel)]="filter.endDate"
+              (change)="filterByDate()"
               type="date"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Select date end"
@@ -58,10 +62,10 @@
           </ng-container>
 
           <!-- item Column -->
-          <ng-container matColumnDef="item">
+          <!-- <ng-container matColumnDef="item">
             <th mat-header-cell *matHeaderCellDef>Item Name</th>
             <td mat-cell *matCellDef="let sale">{{ sale.item }}</td>
-          </ng-container>
+          </ng-container> -->
 
           <!-- Qty Column -->
           <ng-container matColumnDef="total_quantity">
@@ -72,7 +76,7 @@
           <!-- Box Column -->
           <ng-container matColumnDef="order_box">
             <th mat-header-cell *matHeaderCellDef>Box</th>
-            <td mat-cell *matCellDef="let sale">{{ sale.order_box }}</td>
+            <td mat-cell *matCellDef="let sale">{{ sale.total_box }}</td>
           </ng-container>
 
           <!-- Status Column -->

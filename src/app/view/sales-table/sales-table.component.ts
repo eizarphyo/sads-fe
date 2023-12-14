@@ -58,6 +58,12 @@ export class SalesTableComponent implements OnInit {
   dataSource = new MatTableDataSource(this.preorders);
   role: string = '';
 
+  filter: any = {
+    startDate: '',
+    endDate: '',
+    dept: 'admin'
+  }
+
   constructor(
     private api: ApiService,
     public dialog: MatDialog,
@@ -67,6 +73,15 @@ export class SalesTableComponent implements OnInit {
   ngOnInit() {
     this.role = sessionStorage.getItem('role')!;
     this.loadPreorderData();
+  }
+
+  async filterByDate() {
+    if (this.filter.startDate != '' && this.filter.endDate != '') {
+      this.preorders = await this.api.getOrdersByCalendarCtl(this.filter);
+      this.dataSource = new MatTableDataSource(this.preorders);
+      console.log(this.preorders);
+
+    }
   }
 
   async loadPreorderData() {

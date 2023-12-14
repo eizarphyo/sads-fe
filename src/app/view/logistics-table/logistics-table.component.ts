@@ -64,17 +64,29 @@ export class LogisticsTableComponent {
   endD?: Date;
 
   dataSource = new MatTableDataSource(this.preorders);
-  selection = new SelectionModel<any[]>(true, []);
+  selection = new SelectionModel<Preorder>(true, []);
   // selectedData: any[] = [];
   totalBoxes = 0;
   showTrackAssignBox = false;
   role: string = '';
+  filter: any = {
+    startDate: '',
+    endDate: '',
+    dept: 'admin'
+  }
 
   async ngOnInit() {
     this.role = sessionStorage.getItem('role')!;
 
     this.loadPreorderData();
     this.trucks = await this.api.getAllTrucks();
+  }
+
+  async filterByDate() {
+    if (this.filter.startDate != '' && this.filter.endDate != '') {
+      this.preorders = await this.api.getOrdersByCalendarCtl(this.filter);
+      this.dataSource = new MatTableDataSource(this.preorders);
+    }
   }
 
   async loadPreorderData() {
@@ -97,16 +109,14 @@ export class LogisticsTableComponent {
     });
   }
 
-  assignTruck() {
-    console.log(this.selectedTruck);
-  }
+  async assignTruck() {
+    const body: any = {
+      preorder_id: this.selection.selected.at(0)!.id,
+      truck_id: this.selectedTruck
+    }
+    console.log(body);
 
-  dateChanged(event: any) {
-    // console.log(event);s
-    // console.log(this.date);
-    console.log(this.startD);
-    console.log(this.endD);
-    // console.log(this.endD.formatGMT('yyyyMMddHHmmss'));
+    await this.api.assignTruck(body);
   }
 
   applyFilter(event: Event) {

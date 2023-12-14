@@ -121,9 +121,21 @@ export class AdminTableComponent {
 
   preorders: Preorder[] = [];
   dataSource = new MatTableDataSource(this.preorders);
+  filter: any = {
+    startDate: '',
+    endDate: '',
+    dept: 'admin'
+  }
 
   ngOnInit() {
     this.loadPreorderData();
+  }
+
+  async filterByDate() {
+    if (this.filter.startDate != '' && this.filter.endDate != '') {
+      this.preorders = await this.api.getOrdersByCalendarCtl(this.filter);
+      this.dataSource = new MatTableDataSource(this.preorders);
+    }
   }
 
   async loadPreorderData() {

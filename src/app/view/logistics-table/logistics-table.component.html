@@ -7,8 +7,8 @@
         <div class="flex items-center mb-5">
           <div class="relative">
             <input
-              [(ngModel)]="startD"
-              (change)="dateChanged($event)"
+              [(ngModel)]="filter.startDate"
+              (change)="filterByDate()"
               type="date"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Select date end"
@@ -17,8 +17,8 @@
           <span class="mx-4 text-gray-500">to</span>
           <div class="relative">
             <input
-              [(ngModel)]="endD"
-              (change)="dateChanged($event)"
+              [(ngModel)]="filter.endDate"
+              (change)="filterByDate()"
               type="date"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Select date end"
@@ -38,7 +38,7 @@
         </mat-form-field>
 
         <ng-container *ngIf="selection.hasValue()">
-          <div>{{ totalBoxes }} Boxes Pcs</div>
+          <div>{{ totalBoxes }} Boxes</div>
           <!-- Modal toggle -->
           <button
             (click)="toggleTrackAssignBox()"
@@ -127,9 +127,14 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   >
                     <option [value]="null">Select</option>
-                    <option *ngFor="let truck of trucks" [value]="truck.id">
-                      {{ truck.license }} (Capacity: {{ truck.capacity }})
-                    </option>
+                    <ng-container *ngFor="let truck of trucks">
+                      <option
+                        *ngIf="totalBoxes < truck.capacity"
+                        [value]="truck.id"
+                      >
+                        {{ truck.license }} (Capacity: {{ truck.capacity }})
+                      </option></ng-container
+                    >
                   </select>
                 </p>
               </div>
@@ -220,7 +225,7 @@
           <!-- Total Boxes Column -->
           <ng-container matColumnDef="order_box">
             <th mat-header-cell *matHeaderCellDef>Boxes</th>
-            <td mat-cell *matCellDef="let sale">{{ sale.order_box }}</td>
+            <td mat-cell *matCellDef="let sale">{{ sale.total_box }}</td>
           </ng-container>
 
           <!-- Total Amount Column -->
