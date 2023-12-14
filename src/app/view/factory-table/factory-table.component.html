@@ -3,44 +3,45 @@
   <div class="w-full">
     <div class="px-5">
       <!-- table show -->
-      <div class="w-3/5">
-        <!-- calendar control -->
-        <div class="flex justify-between">
-          <!-- calendar control  -->
-          <div class="flex items-center mb-5">
-            <div class="relative">
-              <input
-                type="date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Select date end"
-              />
-            </div>
-            <span class="mx-4 text-gray-500">to</span>
-            <div class="relative">
-              <input
-                type="date"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Select date end"
-              />
-            </div>
-          </div>
 
-          <!-- search -->
-          <mat-form-field>
-            <mat-label>Search Data</mat-label>
+      <!-- calendar control -->
+      <div class="flex justify-between">
+        <!-- calendar control  -->
+        <div class="flex items-center mb-5">
+          <div class="relative">
             <input
-              matInput
-              (keyup)="applyFilter($event)"
-              placeholder="Ex. ium"
-              #input
+              type="date"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Select date end"
             />
-          </mat-form-field>
+          </div>
+          <span class="mx-4 text-gray-500">to</span>
+          <div class="relative">
+            <input
+              type="date"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="Select date end"
+            />
+          </div>
         </div>
 
+        <!-- search -->
+        <mat-form-field>
+          <mat-label>Search Data</mat-label>
+          <input
+            matInput
+            (keyup)="applyFilter($event)"
+            placeholder="Ex. ium"
+            #input
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="data-table">
         <!-- table data -->
         <table mat-table [dataSource]="dataSource" class="shadow-md rounded">
           <!--- Note that these columns can be defined in any order.
-            The actual rendered columns are set as a property on the row definition" -->
+    The actual rendered columns are set as a property on the row definition" -->
 
           <!-- No. Column -->
           <ng-container matColumnDef="no">
@@ -75,12 +76,6 @@
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-
-        <mat-paginator
-          [length]="100"
-          [pageSize]="10"
-          aria-label="Select page"
-        ></mat-paginator>
       </div>
     </div>
   </div>

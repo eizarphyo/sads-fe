@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { MatTableDataSource } from '@angular/material/table';
 
 const LOGISTIC_DATA: any[] = [
@@ -29,7 +28,80 @@ const LOGISTIC_DATA: any[] = [
     totalQty: 120,
     box: 3,
     status: "Accepted",
-  }
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    preorderNo: "PO54321",
+    item: "Liquor",
+    totalQty: 120,
+    box: 3,
+    status: "Accepted",
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    preorderNo: "PO54321",
+    item: "Liquor",
+    totalQty: 120,
+    box: 3,
+    status: "Accepted",
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    preorderNo: "PO54321",
+    item: "Liquor",
+    totalQty: 120,
+    box: 3,
+    status: "Accepted",
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    preorderNo: "PO54321",
+    item: "Liquor",
+    totalQty: 120,
+    box: 3,
+    status: "Accepted",
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    preorderNo: "PO54321",
+    item: "Liquor",
+    totalQty: 120,
+    box: 3,
+    status: "Accepted",
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    preorderNo: "PO54321",
+    item: "Liquor",
+    totalQty: 120,
+    box: 3,
+    status: "Accepted",
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    preorderNo: "PO54321",
+    item: "Liquor",
+    totalQty: 120,
+    box: 3,
+    status: "Accepted",
+  },
+  {
+    no: 3,
+    date: "2023-03-10",
+    preorderNo: "PO54321",
+    item: "Liquor",
+    totalQty: 120,
+    box: 3,
+    status: "Accepted",
+  },
+
 ];
 @Component({
   selector: 'app-warehouse-table',
