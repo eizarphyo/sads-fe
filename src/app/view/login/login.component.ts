@@ -1,10 +1,22 @@
 
 import { HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginRes } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth/auth.service';
+
+// export const matchpassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+
+//   let password = control.get('password');
+//   let confirmpassword = 'flowerwave'
+//   if (password && confirmpassword && password?.value != confirmpassword) {
+//     return {
+//       passwordmatcherror: true
+//     }
+//   }
+//   return null;
+// }
 
 
 @Component({
@@ -12,16 +24,24 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
+
+
 export class LoginComponent {
   constructor(
     private router: Router,
     private auth: AuthService,
   ) { }
 
+  userError = false;
+  pwError = false;
+
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
-  });
+  }
+    // , { validators: matchpassword }
+  );
 
 
   async submitLoginForm() {
@@ -30,6 +50,21 @@ export class LoginComponent {
       email: this.loginForm.controls['email'].value,
       password: this.loginForm.controls['password'].value,
     }
+
+    let checkUser = user?.email != "sales@gmail.com" || user?.email != "client@gmail.com";
+
+
+    if (user.email != '' && checkUser) {
+      this.userError = true;
+    }
+
+    if (user.password != '' && user.password != "flowerwave") {
+      this.pwError = true;
+    }
+
+
+
+
 
     // call api and create preorder
     const res: LoginRes = await this.auth.login(user);
@@ -77,4 +112,7 @@ export class LoginComponent {
 
     this.router.navigateByUrl(url);
   }
+
+
+
 }
