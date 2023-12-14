@@ -4,6 +4,7 @@ import { apiHost } from 'src/utils/utils';
 import { Customer, CustomerRes } from 'src/app/models/customer';
 import { Product } from 'src/app/models/product';
 import { Preorder } from 'src/app/models/preorder';
+import { Truck } from 'src/app/models/truck';
 // import { Observable } from 'rxjs';
 
 @Injectable({
@@ -58,6 +59,42 @@ export class ApiService {
       this.http.get(`${apiHost}/salePreorder`, this.header).subscribe((res: any) => {
         console.log('all preorders >>', res.preorder_data);
         resolve(res.preorder_data)
+      })
+    })
+  }
+
+  getAllWarehousePreorders(): Promise<Preorder[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${apiHost}/wareHousePreorder`, this.header).subscribe((res: any) => {
+        console.log('warehouse preorders >>', res.preorder_data);
+        resolve(res.preorder_data)
+      })
+    })
+  }
+
+  getAllLogisticsPreorders(): Promise<Preorder[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${apiHost}/logisticPreorder`, this.header).subscribe((res: any) => {
+        console.log('logistics preorders >>', res.preorder_data);
+        resolve(res.preorder_data)
+      })
+    })
+  }
+
+  getAllTrucks(): Promise<Truck[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${apiHost}/order/truck`, this.header).subscribe((res: any) => {
+        console.log('al trucks >>', res.truck_list);
+        resolve(res.truck_list)
+      })
+    })
+  }
+
+  assignTruck(body: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${apiHost}/order/truck`, this.header).subscribe((res: any) => {
+        console.log('al trucks >>', res);
+        resolve(res)
       })
     })
   }

@@ -119,7 +119,7 @@ export class WarehouseTableComponent {
     private dialog: MatDialog,
   ) { }
   myLogisticData: any = [];
-  displayedColumns: string[] = ['no', 'date', 'preorder_number', 'item', 'total_quantity', 'box', 'status'];
+  displayedColumns: string[] = ['no', 'date', 'preorder_number', 'item', 'total_quantity', 'order_box', 'status'];
   preorders: Preorder[] = [];
 
   dataSource = new MatTableDataSource(this.preorders);
@@ -131,7 +131,7 @@ export class WarehouseTableComponent {
   }
 
   async loadPreorderData() {
-    this.preorders = await this.api.getAllPreorders();
+    this.preorders = await this.api.getAllWarehousePreorders();
     this.dataSource = new MatTableDataSource(this.preorders);
     this.preorders.forEach(order => {
       order.date = moment.utc(order.created_at).format('MM/DD/YYYY');

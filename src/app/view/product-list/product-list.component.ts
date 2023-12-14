@@ -100,7 +100,7 @@ export class ProductListComponent {
 
       let last_i = this.cartList.length - 1;
 
-      this.increseTotalPrice(last_i, this.cartList[last_i].order_count);
+      this.increseTotalPrice(last_i, this.cartList[last_i].product_id);
     } else {
       this.cartList[cart_index].order_count++;
       this.increseTotalPrice(cart_index, selected.product_id);

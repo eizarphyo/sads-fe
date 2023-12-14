@@ -7,6 +7,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { Preorder } from 'src/app/models/preorder';
 import * as moment from 'moment';
 import { StatusDialogComponent } from '../status-dialog/status-dialog.component';
+import { Truck } from 'src/app/models/truck';
 
 @Component({
   selector: 'app-logistics-table',
@@ -19,39 +20,41 @@ export class LogisticsTableComponent {
     private api: ApiService,
   ) { }
 
-  displayedColumns: string[] = ['select', 'no', 'date', 'customer_name', 'preorder_number', 'customer_region', 'total_quantity', 'boxes', 'address', 'status'];
-  trucks: any[] = [
-    {
-      id: 1,
-      truck_no: "C3-2349",
-      capacity: 200,
-      driver: "Kyaw Kyaw"
-    },
-    {
-      id: 2,
-      truck_no: "A3-4534",
-      capacity: 260,
-      driver: "Kyaw Kyaw"
-    },
-    {
-      id: 3,
-      truck_no: "L3-4532",
-      capacity: 50,
-      driver: "Kyaw Kyaw"
-    },
-    {
-      id: 4,
-      truck_no: "J3-3242",
-      capacity: 100,
-      driver: "Kyaw Kyaw"
-    },
-    {
-      id: 5,
-      truck_no: "K2-4534",
-      capacity: 300,
-      driver: "Kyaw Kyaw"
-    }
-  ]
+  displayedColumns: string[] = ['select', 'no', 'date', 'customer_name', 'preorder_number', 'customer_region', 'total_quantity', 'order_box', 'customer_address', 'status'];
+  // trucks: any[] = [
+  //   {
+  //     id: 1,
+  //     truck_no: "C3-2349",
+  //     capacity: 200,
+  //     driver: "Kyaw Kyaw"
+  //   },
+  //   {
+  //     id: 2,
+  //     truck_no: "A3-4534",
+  //     capacity: 260,
+  //     driver: "Kyaw Kyaw"
+  //   },
+  //   {
+  //     id: 3,
+  //     truck_no: "L3-4532",
+  //     capacity: 50,
+  //     driver: "Kyaw Kyaw"
+  //   },
+  //   {
+  //     id: 4,
+  //     truck_no: "J3-3242",
+  //     capacity: 100,
+  //     driver: "Kyaw Kyaw"
+  //   },
+  //   {
+  //     id: 5,
+  //     truck_no: "K2-4534",
+  //     capacity: 300,
+  //     driver: "Kyaw Kyaw"
+  //   }
+  // ]
+
+  trucks: Truck[] = [];
 
   preorders: Preorder[] = [];
 
@@ -67,14 +70,15 @@ export class LogisticsTableComponent {
   showTrackAssignBox = false;
   role: string = '';
 
-  ngOnInit() {
+  async ngOnInit() {
     this.role = sessionStorage.getItem('role')!;
 
     this.loadPreorderData();
+    this.trucks = await this.api.getAllTrucks();
   }
 
   async loadPreorderData() {
-    this.preorders = await this.api.getAllPreorders();
+    this.preorders = await this.api.getAllLogisticsPreorders();
     this.dataSource = new MatTableDataSource(this.preorders);
     this.preorders.forEach(order => {
       order.date = moment.utc(order.created_at).format('MM/DD/YYYY');

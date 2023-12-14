@@ -1,7 +1,8 @@
-<mat-horizontal-stepper [labelPosition]="'bottom'">
+<!-- <mat-horizontal-stepper [labelPosition]="'bottom'"> -->
+<mat-stepper linear>
   <!-- changed step icons -->
   <mat-step
-    label="Order Acccept"
+    label="Acccept Order"
     [completed]="data.status != 'pending'"
     state="order"
   >
@@ -9,6 +10,7 @@
   <mat-step label="Stock Ready" [completed]="data.status != 'pending'">
   </mat-step>
   <mat-step label="Shipping"> </mat-step>
-  <mat-step label="Delivered"> </mat-step>
-  <mat-step label="Pending/Return"> </mat-step>
-</mat-horizontal-stepper>
+  <mat-step tabIndex="-1" label="Delivered"> </mat-step>
+  <mat-step tabIndex="-1" label="Cancelled"> </mat-step>
+  <!-- </mat-horizontal-stepper> -->
+</mat-stepper>
