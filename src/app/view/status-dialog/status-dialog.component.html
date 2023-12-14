@@ -14,7 +14,7 @@
       [disabled]="role != 'sales'"
       [(ngModel)]="selectedStatus"
       ngDefaultControl="selectedStatus"
-      value="accept"
+      value="accepted"
       >Accept Order</mat-radio-button
     >
     <mat-radio-button
@@ -25,21 +25,21 @@
       >Stock Ready</mat-radio-button
     >
     <mat-radio-button
-      [disabled]="role != 'logistics'"
+      [disabled]="role != 'logistic' || data.status == 'shipping'"
       [(ngModel)]="selectedStatus"
       ngDefaultControl="selectedStatus"
       value="shipping"
       >Shipping</mat-radio-button
     >
     <mat-radio-button
-      [disabled]="role != 'logistics'"
+      [disabled]="role != 'logistic' || data.status != 'shipping'"
       [(ngModel)]="selectedStatus"
       ngDefaultControl="selectedStatus"
       value="delivered"
       >Delivered</mat-radio-button
     >
     <mat-radio-button
-      [disabled]="role != 'logistics'"
+      [disabled]="role != 'logistic' || data.status != 'shipping'"
       [(ngModel)]="selectedStatus"
       ngDefaultControl="selectedStatus"
       value="cancelled"
@@ -47,6 +47,12 @@
     >
   </mat-dialog-content>
   <mat-dialog-actions>
-    <button (click)="changeStatus()" mat-raised-button>Change</button>
+    <button
+      [disabled]="selectedStatus == ''"
+      (click)="changeStatus()"
+      mat-raised-button
+    >
+      Change
+    </button>
   </mat-dialog-actions>
 </div>

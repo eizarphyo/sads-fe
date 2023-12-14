@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
+import { Preorder } from 'src/app/models/preorder';
+import { ApiService } from 'src/app/services/api/api.service';
+import { StatusDialogComponent } from '../status-dialog/status-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 const LOGISTIC_DATA: any[] = [
   {
@@ -109,11 +114,42 @@ const LOGISTIC_DATA: any[] = [
   styleUrls: ['./warehouse-table.component.css']
 })
 export class WarehouseTableComponent {
+  constructor(
+    private api: ApiService,
+    private dialog: MatDialog,
+  ) { }
   myLogisticData: any = [];
-  displayedColumns: string[] = ['no', 'date', 'preorderNo', 'item', 'totalQty', 'box', 'status'];
+  displayedColumns: string[] = ['no', 'date', 'preorder_number', 'item', 'total_quantity', 'box', 'status'];
+  preorders: Preorder[] = [];
 
-  dataSource = new MatTableDataSource(LOGISTIC_DATA);
+  dataSource = new MatTableDataSource(this.preorders);
+  role: string = '';
 
+  ngOnInit() {
+    this.role = sessionStorage.getItem('role')!;
+    this.loadPreorderData();
+  }
+
+  async loadPreorderData() {
+    this.preorders = await this.api.getAllPreorders();
+    this.dataSource = new MatTableDataSource(this.preorders);
+    this.preorders.forEach(order => {
+      order.date = moment.utc(order.created_at).format('MM/DD/YYYY');
+    });
+
+    this.preorders = this.preorders.sort((a: Preorder, b: Preorder) => {
+      return a.id - b.id;
+    });
+
+  }
+
+  openStatusDialog(preorder: Preorder) {
+    const dialogRef = this.dialog.open(StatusDialogComponent, { data: preorder });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadPreorderData();
+    });
+  }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

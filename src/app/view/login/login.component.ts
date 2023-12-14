@@ -37,11 +37,44 @@ export class LoginComponent {
     sessionStorage.setItem('role', res.user.role);
     // await this.auth.login(user);
 
-    this.router.navigateByUrl('preorder');
+    this.checkRoleAndNavigate();
   }
 
-  submit() {
-    console.log(this.loginForm.value);
+  checkRoleAndNavigate() {
+    const role = sessionStorage.getItem('role');
+    let url = '';
 
+    switch (role) {
+      case 'client': {
+        url = 'preorder';
+        break;
+      }
+      case 'sales': {
+        url = 'sales';
+        break;
+      }
+      case 'warehouse': {
+        url = 'warehouse'
+        break;
+      }
+      case 'factory': {
+        url = 'factory'
+        break;
+      }
+      case 'logistic': {
+        url = 'logistics'
+        break;
+      }
+      case 'admin': {
+        url = 'admin'
+        break;
+      }
+      default: {
+        url = 'sales'
+        break;
+      }
+    }
+
+    this.router.navigateByUrl(url);
   }
 }

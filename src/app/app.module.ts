@@ -30,6 +30,8 @@ import { SalesStepperComponent } from './components/sales-stepper/sales-stepper.
 import { MatStepperModule } from '@angular/material/stepper'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from "@angular/material/paginator";
+import { CommonModule } from '@angular/common';
+import { PreorderInfoComponent } from './view/preorder-info/preorder-info.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     PermitDialogComponent,
     StatusDialogComponent,
     SalesStepperComponent,
+    PreorderInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,8 @@ import { MatPaginatorModule } from "@angular/material/paginator";
     MatStepperModule,
     MatCheckboxModule,
     FormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    CommonModule,
   ],
   providers: [
     provideAnimations(),

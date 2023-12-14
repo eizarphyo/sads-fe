@@ -56,6 +56,7 @@ export class SalesTableComponent implements OnInit {
 
   // dataSource = new MatTableDataSource(SALES_DATA);
   dataSource = new MatTableDataSource(this.preorders);
+  role: string = '';
 
   constructor(
     private api: ApiService,
@@ -63,7 +64,12 @@ export class SalesTableComponent implements OnInit {
 
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
+    this.role = sessionStorage.getItem('role')!;
+    this.loadPreorderData();
+  }
+
+  async loadPreorderData() {
     this.preorders = await this.api.getAllPreorders();
     console.log(this.preorders);
 
@@ -72,31 +78,33 @@ export class SalesTableComponent implements OnInit {
       order.date = moment.utc(order.created_at).format('MM/DD/YYYY');
     });
     this.dataSource = new MatTableDataSource(this.preorders);
+
+    this.preorders = this.preorders.sort((a: Preorder, b: Preorder) => {
+      return a.id - b.id;
+    });
   }
 
   getRowData(row: Preorder, evt: any): void {
     console.log(row, evt);
   }
 
-  // loadData() {
-  //   this.apiservice.getSalesData().subscribe(
-  //     (result) => {
-  //       this.mySalesData = result;
-  //     },
-  //     error => console.error("Error fetching sales data", error)
-  //   )
-  // }
-
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase()
   }
 
-  openPermitDialog() {
-    this.dialog.open(PermitDialogComponent);
+  openPermitDialog(preorder: Preorder) {
+    const dialogRef = this.dialog.open(PermitDialogComponent, { data: preorder });
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadPreorderData();
+    });
   }
 
   openStatusDialog(preorder: Preorder) {
-    this.dialog.open(StatusDialogComponent, { data: preorder })
+    const dialogRef = this.dialog.open(StatusDialogComponent, { data: preorder });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.loadPreorderData();
+    });
   }
 }

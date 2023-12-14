@@ -11,3 +11,8 @@
 .mat-mdc-dialog-actions .mat-mdc-button-base + .mat-mdc-button-base {
   margin-left: 0;
 }
+
+[mat-dialog-title] {
+  font-weight: 600;
+  font-size: 18px;
+}

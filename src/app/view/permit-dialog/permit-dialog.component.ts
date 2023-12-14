@@ -1,10 +1,16 @@
 import { Component, Inject } from '@angular/core';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Preorder } from 'src/app/models/preorder';
+import { ApiService } from 'src/app/services/api/api.service';
 
 
 
-export interface StatusData {
-  status: 'Pending' | 'Requesting' | 'Accepted' | 'Rejected';
+export enum PermitStatus {
+  // status: 'Pending' | 'Requesting' | 'Accepted' | 'Rejected';
+  PENDING = 'pending',
+  REQUESTING = 'requesting',
+  ACCEPTED = 'accepted',
+  REJECTED = 'rejected'
 }
 
 @Component({
@@ -13,5 +19,26 @@ export interface StatusData {
   styleUrls: ['./permit-dialog.component.css'],
 })
 export class PermitDialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: StatusData) { }
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: Preorder,
+    private dialogRef: MatDialogRef<PermitDialogComponent>,
+    private api: ApiService,
+
+  ) { }
+
+  async changePermitStatus(status: string) {
+    console.log(this.data.permit_status);
+    console.log('change status >>', status);
+
+    const body = {
+      preorder_id: this.data.id,
+      permit_status: status
+    }
+
+    const isStatusChanged = await this.api.changePermitStatus(body);
+
+    if (isStatusChanged) {
+      this.dialogRef.close();
+    }
+  }
 }
