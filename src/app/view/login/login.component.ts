@@ -35,6 +35,8 @@ export class LoginComponent {
     const res: LoginRes = await this.auth.login(user);
     sessionStorage.setItem('token', res.token);
     sessionStorage.setItem('role', res.user.role);
+    // await this.auth.login(user);
+
     this.router.navigateByUrl('preorder');
   }
 
