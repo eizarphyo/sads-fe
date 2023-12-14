@@ -64,8 +64,6 @@ export class SalesTableComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    // this.loadData();
-    // console.log(SALES_DATA);
     this.preorders = await this.api.getAllPreorders();
     console.log(this.preorders);
 

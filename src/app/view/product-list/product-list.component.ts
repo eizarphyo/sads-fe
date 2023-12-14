@@ -8,7 +8,7 @@ export interface CartList {
   product_id: number,
   product_name: string,
   total_price: number,
-  qty: number
+  order_count: number
 }
 
 @Component({
@@ -47,7 +47,7 @@ export class ProductListComponent {
     const selected: CartList = {
       product_id: this.products[i].id,
       product_name: this.products[i].product_name,
-      qty: 0,
+      order_count: 0,
       total_price: 0
     }
 
@@ -56,19 +56,19 @@ export class ProductListComponent {
     });
 
     if (cart_index < 0) {
-      selected.qty++;
+      selected.order_count++;
       selected.total_price = this.products[i].product_price;
       this.cartList.push(selected);
       let last_i = this.cartList.length - 1;
-      this.increseTotalPrice(last_i, this.cartList[last_i].qty);
+      this.increseTotalPrice(last_i, this.cartList[last_i].order_count);
     } else {
-      this.cartList[cart_index].qty++;
+      this.cartList[cart_index].order_count++;
       this.increseTotalPrice(cart_index, selected.product_id);
     }
   }
 
   add(cart_index: number, id: number) {
-    this.cartList[cart_index].qty++;
+    this.cartList[cart_index].order_count++;
     this.increseTotalPrice(cart_index, id);
   }
 
@@ -77,13 +77,13 @@ export class ProductListComponent {
       return product.id == product_id;
     });
 
-    this.cartList[cart_index].total_price = this.cartList[cart_index].qty * this.products[product_index].product_price;
+    this.cartList[cart_index].total_price = this.cartList[cart_index].order_count * this.products[product_index].product_price;
     this.calculateAllTotalPriceAndQty();
   }
 
   remove(cart_index: number, id: number) {
-    if (this.cartList[cart_index].qty > 1) {
-      this.cartList[cart_index].qty--;
+    if (this.cartList[cart_index].order_count > 1) {
+      this.cartList[cart_index].order_count--;
       this.decreseTotalPrice(cart_index, id);
     } else {
       this.decreseTotalPrice(cart_index, id);
@@ -107,7 +107,7 @@ export class ProductListComponent {
     let qty = 0;
     this.cartList.forEach((item) => {
       total += item.total_price;
-      qty += item.qty;
+      qty += item.order_count;
     });
     this.totals.total_amt = total;
     this.totals.total_qty = qty;
@@ -122,10 +122,12 @@ export class ProductListComponent {
     const preorder = {
       preorder_id: sessionStorage.getItem('preorder_id'),
       product_list: this.cartList,
-      // total_price: this.totals.total_amt,
-      // total_qty: this.totals.total_qty,
+      total_price: this.totals.total_amt,
+      total_quantity: this.totals.total_qty,
     }
-    console.log(preorder);
+    // console.log(preorder);
+    console.log(this.cartList);
+
 
     const isCreated = await this.api.createOrderList(preorder);
 
