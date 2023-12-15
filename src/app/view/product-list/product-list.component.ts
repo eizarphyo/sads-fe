@@ -100,7 +100,7 @@ export class ProductListComponent {
 
       let last_i = this.cartList.length - 1;
 
-      this.increseTotalPrice(last_i, this.cartList[last_i].order_count);
+      this.increseTotalPrice(last_i, this.cartList[last_i].product_id);
     } else {
       this.cartList[cart_index].order_count++;
       this.increseTotalPrice(cart_index, selected.product_id);
@@ -183,15 +183,15 @@ export class ProductListComponent {
     this.cartList = [];
   }
 
-  updateTotalPrice(str: any, i: number, id: number) {
+  updateTotalPriceByInputValue(str: string, i: number, id: number) {
     const product_i = this.products.findIndex((product) => {
       return product.id == id;
     });
+
     console.log(str);
+    const qty: any = parseInt(str);
 
-
-    // const qty: any = parseInt(str);
-
-    // this.cartList[i].total_price = this.products[product_i].product_price * qty;
+    this.cartList[i].total_price = this.products[product_i].product_price * qty;
+    this.calculateAllTotalPriceAndQty();
   }
 }

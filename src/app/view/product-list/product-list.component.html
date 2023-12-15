@@ -132,8 +132,13 @@
                     <div>
                       <input
                         [value]="item.order_count"
+                        [(ngModel)]="item.order_count"
                         (ngModelChange)="
-                          updateTotalPrice($event, i, item.product_id)
+                          updateTotalPriceByInputValue(
+                            $event,
+                            i,
+                            item.product_id
+                          )
                         "
                         type="number"
                         min="1"

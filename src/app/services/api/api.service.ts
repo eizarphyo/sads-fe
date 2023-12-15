@@ -4,6 +4,7 @@ import { apiHost } from 'src/utils/utils';
 import { Customer, CustomerRes } from 'src/app/models/customer';
 import { Product } from 'src/app/models/product';
 import { Preorder } from 'src/app/models/preorder';
+import { Truck } from 'src/app/models/truck';
 // import { Observable } from 'rxjs';
 
 @Injectable({
@@ -62,6 +63,46 @@ export class ApiService {
     })
   }
 
+  getAllWarehousePreorders(): Promise<Preorder[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${apiHost}/wareHousePreorder`, this.header).subscribe((res: any) => {
+        console.log('warehouse preorders >>', res.preorder_data);
+        resolve(res.preorder_data)
+      })
+    })
+  }
+
+  getAllLogisticsPreorders(): Promise<Preorder[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${apiHost}/logisticPreorder`, this.header).subscribe((res: any) => {
+        console.log('logistics preorders >>', res.preorder_data);
+        resolve(res.preorder_data)
+      })
+    })
+  }
+
+  getAllTrucks(): Promise<Truck[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${apiHost}/order/truck`, this.header).subscribe((res: any) => {
+        console.log('all trucks >>', res.truck_list);
+        resolve(res.truck_list)
+      })
+    })
+  }
+
+  assignTruck(body: any): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      console.log(this.header.headers);
+
+      this.http.post(`${apiHost}/order/truck`, body, this.header).subscribe((res: any) => {
+        console.log('assigned truck >>', res);
+        if (res.status == 'assigned') {
+          resolve(true);
+        };
+      })
+    });
+  }
+
   createOrderList(body: any): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.http.post(`${apiHost}/preorderItems`, body, this.header).subscribe((res) => {
@@ -87,6 +128,15 @@ export class ApiService {
         if (res.status == 'success') {
           resolve(true);
         }
+      })
+    })
+  }
+
+  getOrdersByCalendarCtl(body: any): Promise<Preorder[]> {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${apiHost}/calendarControl`, body, this.header).subscribe((res: any) => {
+        console.log('by calendar ctl >>', res.filtered_data);
+        resolve(res.filtered_data);
       })
     })
   }
