@@ -90,13 +90,17 @@ export class ApiService {
     })
   }
 
-  assignTruck(body: any): Promise<any> {
+  assignTruck(body: any): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      this.http.post(`${apiHost}/order/truck`, this.header).subscribe((res: any) => {
-        console.log('truck assigned >>', res);
-        resolve(res)
+      console.log(this.header.headers);
+
+      this.http.post(`${apiHost}/order/truck`, body, this.header).subscribe((res: any) => {
+        console.log('assigned truck >>', res);
+        if (res.status == 'assigned') {
+          resolve(true);
+        };
       })
-    })
+    });
   }
 
   createOrderList(body: any): Promise<boolean> {
