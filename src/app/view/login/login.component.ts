@@ -36,6 +36,9 @@ export class LoginComponent {
   userError = false;
   pwError = false;
 
+  email = '';
+  pw = '';
+
   loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required]),
@@ -51,20 +54,22 @@ export class LoginComponent {
       password: this.loginForm.controls['password'].value,
     }
 
-    let checkUser = user?.email != "sales@gmail.com" || user?.email != "client@gmail.com";
+    const email = this.loginForm.controls['email'].value;
+    const pw = this.loginForm.controls['password'].value;
 
+    const emails: any[] = ['client@gmail.com', 'sales@gmail.com', 'factory@gmail.com', 'warehouse@gmail.com', 'logistic@gmail.com', 'admin@gmail.com']
 
-    if (user.email != '' && checkUser) {
+    const i = emails.findIndex(e => {
+      return e == email;
+    })
+
+    if (i < 0) {
       this.userError = true;
     }
 
     if (user.password != '' && user.password != "flowerwave") {
       this.pwError = true;
     }
-
-
-
-
 
     // call api and create preorder
     const res: LoginRes = await this.auth.login(user);
@@ -73,6 +78,12 @@ export class LoginComponent {
     // await this.auth.login(user);
 
     this.checkRoleAndNavigate();
+  }
+
+  removeError() {
+
+    this.userError = false
+    this.pwError = false;
   }
 
   checkRoleAndNavigate() {
