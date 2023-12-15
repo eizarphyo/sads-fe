@@ -7,10 +7,10 @@
     state="order"
   >
   </mat-step>
-  <mat-step label="Stock Ready" [completed]="data.status != 'pending'">
+  <mat-step label="Stock Ready" [completed]="data.status == 'ready' || data.status == 'shipping' || data.status == 'delivered' || data.status =='cancelled' ">
   </mat-step>
-  <mat-step label="Shipping"> </mat-step>
-  <mat-step tabIndex="-1" label="Delivered"> </mat-step>
+  <mat-step label="Shipping" [completed]="data.status == 'shipping' || data.status == 'delivered' || data.status =='cancelled' "> </mat-step>
+  <mat-step tabIndex="-1" label="Delivered" [completed]="data.status =='cancelled' "> </mat-step>
   <mat-step tabIndex="-1" label="Cancelled"> </mat-step>
   <!-- </mat-horizontal-stepper> -->
 </mat-stepper>
