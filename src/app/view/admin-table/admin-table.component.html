@@ -61,7 +61,7 @@
           <!-- Preorder Column -->
           <ng-container matColumnDef="preorder_number">
             <th mat-header-cell *matHeaderCellDef>Preorder No.</th>
-            <td mat-cell *matCellDef="let sale">{{ sale.preorder_number }}</td>
+            <td mat-cell *matCellDef="let sale"><a [routerLink]="['/preorderDetail', sale.id]" class=" text-blue-600 underline">{{ sale.preorder_number }}</a></td>
           </ng-container>
 
           <!-- region Column -->
@@ -99,13 +99,13 @@
 
       <article class="total">
         <div class="total-header">
-          <h4 class="">Total Amount:</h4>
+          <h4 class="">Total Price:</h4>
           <h4>Total Quantity:</h4>
         </div>
 
         <div class="total-amount">
-          <p>{{ getTotalAmount() }} Ks</p>
-          <p>{{ getTotalQty() }}</p>
+          <p>{{ totals.total_price}} Ks</p>
+          <p>{{ totals.total_qty }}</p>
         </div>
       </article>
     </div>

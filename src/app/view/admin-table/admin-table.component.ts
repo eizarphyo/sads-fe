@@ -121,6 +121,10 @@ export class AdminTableComponent {
 
   preorders: Preorder[] = [];
   dataSource = new MatTableDataSource(this.preorders);
+  totals: any = {
+    total_price: 0,
+    total_qty: 0
+  }
 
   ngOnInit() {
     this.loadPreorderData();
@@ -136,6 +140,8 @@ export class AdminTableComponent {
     this.preorders = this.preorders.sort((a: Preorder, b: Preorder) => {
       return a.id - b.id;
     });
+
+    this.updateTotalPriceAndQty();
   }
 
 
@@ -144,8 +150,15 @@ export class AdminTableComponent {
     this.dataSource.filter = filterValue.trim().toLowerCase()
   }
 
-  getTotalAmount() {
-    return ADMIN_DATA.map((t: any) => t.totalAmount).reduce((acc: any, value: any) => acc + value, 0);
+  updateTotalPriceAndQty() {
+    let price = 0;
+    let qty = 0;
+    this.preorders.forEach(order => {
+      price += order.total_price;
+      qty += order.total_quantity;
+    });
+    this.totals.total_price = price;
+    this.totals.total_qty = qty;
   }
   getTotalQty() { return ADMIN_DATA.map((t: any) => t.totalQty).reduce((acc: any, value: any) => acc + value, 0); }
 

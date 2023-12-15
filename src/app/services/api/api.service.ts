@@ -5,6 +5,9 @@ import { Customer, CustomerRes } from 'src/app/models/customer';
 import { Product } from 'src/app/models/product';
 import { Preorder } from 'src/app/models/preorder';
 import { Truck } from 'src/app/models/truck';
+import { PreorderDetailRes } from 'src/app/models/preorderdetail';
+import { FactoryPreorder } from 'src/app/models/factory';
+import { RawMaterial } from 'src/app/models/rawMaterial';
 // import { Observable } from 'rxjs';
 
 @Injectable({
@@ -90,6 +93,15 @@ export class ApiService {
     })
   }
 
+  getFactoryData(): Promise<FactoryPreorder[]> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${apiHost}/getFactoryData`, this.header).subscribe((res: any) => {
+        console.log('factory preorders >>', res.data);
+        resolve(res.data)
+      })
+    })
+  }
+
   assignTruck(body: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.http.post(`${apiHost}/order/truck`, this.header).subscribe((res: any) => {
@@ -124,6 +136,24 @@ export class ApiService {
         if (res.status == 'success') {
           resolve(true);
         }
+      })
+    })
+  }
+
+  getPreorderDetail(body: any): Promise<PreorderDetailRes> {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${apiHost}/getPreorderDetail`, body, this.header).subscribe((res: any) => {
+        console.log('order details', res);
+          resolve(res);
+      })
+    })
+  }
+
+  getRawMaterials(body: any): Promise<RawMaterial[]> {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${apiHost}/getRawList`, body, this.header).subscribe((res: any) => {
+        console.log('raw materials', res.data);
+          resolve(res.data);
       })
     })
   }

@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
+import * as moment from 'moment';
+import { FactoryPreorder } from 'src/app/models/factory';
+import { Preorder } from 'src/app/models/preorder';
+import { RawMaterial } from 'src/app/models/rawMaterial';
+import { ApiService } from 'src/app/services/api/api.service';
 
 const FACTORY_DATA: any[] = [
   {
@@ -30,12 +36,36 @@ const FACTORY_DATA: any[] = [
   styleUrls: ['./factory-table.component.css']
 })
 export class FactoryTableComponent {
-  myLogisticData: any = [];
-  displayedColumns: string[] = ['no', 'date', 'item', 'totalQty', 'box'];
 
-  dataSource = new MatTableDataSource(FACTORY_DATA);
+constructor(private api: ApiService, public dialog: MatDialog) {
 
-  getTotalRawMaterials() {
-    return FACTORY_DATA.map((data: any) => data.totalQty).reduce((a: any, b: any) => a + b, 0);
+}
+
+
+  displayedColumns: string[] = ['id','preorder_number', 'order_date', 'totalQty', 'box','action'];
+  factoryPreorder: FactoryPreorder[] = [];
+
+  dataSource = new MatTableDataSource(this.factoryPreorder);
+  materials: RawMaterial[] = [];
+
+  async ngOnInit(){
+    this.loadFactoryPreorderData();
   }
+
+  async loadFactoryPreorderData() {
+    this.factoryPreorder = await this.api.getFactoryData();
+    this.dataSource = new MatTableDataSource(this.factoryPreorder);
+
+    this.factoryPreorder.forEach((data) => {
+          data.date = moment.utc(data.created_at).format('MM/DD/YYYY');
+        });
+
+        console.log(this.factoryPreorder);
+
+  }
+
+  async getMaterials(preorder: Preorder) {
+    this.materials = await this.api.getRawMaterials({preorder_id: preorder.id});
+  }
+
 }

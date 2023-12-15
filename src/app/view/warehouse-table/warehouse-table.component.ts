@@ -119,7 +119,7 @@ export class WarehouseTableComponent {
     private dialog: MatDialog,
   ) { }
   myLogisticData: any = [];
-  displayedColumns: string[] = ['no', 'date', 'preorder_number', 'item', 'total_quantity', 'order_box', 'status'];
+  displayedColumns: string[] = ['no', 'date', 'preorder_number', 'total_quantity', 'order_box', 'status'];
   preorders: Preorder[] = [];
 
   dataSource = new MatTableDataSource(this.preorders);

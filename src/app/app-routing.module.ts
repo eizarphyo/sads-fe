@@ -8,6 +8,7 @@ import { FactoryTableComponent } from './view/factory-table/factory-table.compon
 import { WarehouseTableComponent } from './view/warehouse-table/warehouse-table.component';
 import { LogisticsTableComponent } from './view/logistics-table/logistics-table.component';
 import { AdminTableComponent } from './view/admin-table/admin-table.component';
+import {PreorderInfoComponent} from './view/preorder-info/preorder-info.component';
 import { SidenavComponent } from './view/sidenav/sidenav.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UserGuard } from './guards/user.guard';
@@ -65,10 +66,10 @@ const routes: Routes = [
     component: AdminTableComponent,
     canActivate: [AuthGuard],
   },
-  // {
-  //   path: 'sidenav',
-  //   component: SidenavComponent
-  // }
+  {
+    path: 'preorderDetail/:preorder_id',
+    component: PreorderInfoComponent
+  }
 ];
 
 @NgModule({
