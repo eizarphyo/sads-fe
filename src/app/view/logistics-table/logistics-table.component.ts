@@ -20,7 +20,7 @@ export class LogisticsTableComponent {
     private api: ApiService,
   ) { }
 
-  displayedColumns: string[] = ['select', 'no', 'date', 'customer_name', 'preorder_number', 'customer_region', 'total_quantity', 'order_box', 'customer_address', 'status'];
+  displayedColumns: string[] = ['select', 'no', 'date', 'customer_name', 'preorder_number', 'customer_region', 'total_quantity', 'order_box', 'customer_address', 'assigned_truck', 'status'];
   // trucks: any[] = [
   //   {
   //     id: 1,
@@ -64,17 +64,29 @@ export class LogisticsTableComponent {
   endD?: Date;
 
   dataSource = new MatTableDataSource(this.preorders);
-  selection = new SelectionModel<any[]>(true, []);
+  selection = new SelectionModel<Preorder>(true, []);
   // selectedData: any[] = [];
   totalBoxes = 0;
   showTrackAssignBox = false;
   role: string = '';
+  filter: any = {
+    startDate: '',
+    endDate: '',
+    dept: 'admin'
+  }
 
   async ngOnInit() {
     this.role = sessionStorage.getItem('role')!;
 
     this.loadPreorderData();
     this.trucks = await this.api.getAllTrucks();
+  }
+
+  async filterByDate() {
+    if (this.filter.startDate != '' && this.filter.endDate != '') {
+      this.preorders = await this.api.getOrdersByCalendarCtl(this.filter);
+      this.dataSource = new MatTableDataSource(this.preorders);
+    }
   }
 
   async loadPreorderData() {
@@ -97,16 +109,31 @@ export class LogisticsTableComponent {
     });
   }
 
-  assignTruck() {
-    console.log(this.selectedTruck);
-  }
+  async assignTruck() {
+    const id_list: number[] = [];
 
-  dateChanged(event: any) {
-    // console.log(event);s
-    // console.log(this.date);
-    console.log(this.startD);
-    console.log(this.endD);
-    // console.log(this.endD.formatGMT('yyyyMMddHHmmss'));
+    this.selection.selected.forEach((order) => {
+      console.log(order);
+
+      id_list.push(order.id);
+    });
+
+    console.log(id_list);
+
+    const body: any = {
+      truck_id: this.selectedTruck,
+      preorder_id_list: id_list,
+    }
+    console.log(body);
+
+    this.showTrackAssignBox = !this.showTrackAssignBox;
+    console.log('>>', this.showTrackAssignBox);
+
+    const assigned = await this.api.assignTruck(body);
+
+    if (assigned) {
+      this.loadPreorderData();
+    }
   }
 
   applyFilter(event: Event) {
@@ -130,7 +157,7 @@ export class LogisticsTableComponent {
     if (event.checked) {
       this.preorders.forEach((data) => {
         // this.selectedData.push(data);
-        // this.selection.select(...this.dataSource.data);
+        this.selection.select(...this.dataSource.data);
       });
     } else {
       // this.selectedData = [];
@@ -155,7 +182,7 @@ export class LogisticsTableComponent {
   updateQty() {
     let total = 0
     this.selection.selected.forEach((data: any) => {
-      total += data.total_quantity;
+      total += parseInt(data.total_box);
     });
     this.totalBoxes = total;
 
@@ -164,8 +191,6 @@ export class LogisticsTableComponent {
   toggleTrackAssignBox() {
     this.showTrackAssignBox = !this.showTrackAssignBox;
   }
-
-
 }
 
 

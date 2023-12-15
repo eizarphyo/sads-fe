@@ -34,7 +34,7 @@
       alt="logo"
       class="w-20 mx-auto mb-2 rounded-xl"
     />
-    <p class="mb-3 text-lg font-medium text-center">User Name</p>
+    <p class="mb-3 text-lg font-medium text-center">{{ role | titlecase }}</p>
     <ul class="space-y-2 font-medium">
       <li *ngIf="role == 'client'">
         <a

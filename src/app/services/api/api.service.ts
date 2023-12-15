@@ -87,7 +87,7 @@ export class ApiService {
   getAllTrucks(): Promise<Truck[]> {
     return new Promise((resolve, reject) => {
       this.http.get(`${apiHost}/order/truck`, this.header).subscribe((res: any) => {
-        console.log('al trucks >>', res.truck_list);
+        console.log('all trucks >>', res.truck_list);
         resolve(res.truck_list)
       })
     })
@@ -102,13 +102,18 @@ export class ApiService {
     })
   }
 
-  assignTruck(body: any): Promise<any> {
+
+  assignTruck(body: any): Promise<boolean> {
     return new Promise((resolve, reject) => {
-      this.http.post(`${apiHost}/order/truck`, this.header).subscribe((res: any) => {
-        console.log('al trucks >>', res);
-        resolve(res)
+      console.log(this.header.headers);
+
+      this.http.post(`${apiHost}/order/truck`, body, this.header).subscribe((res: any) => {
+        console.log('assigned truck >>', res);
+        if (res.status == 'assigned') {
+          resolve(true);
+        };
       })
-    })
+    });
   }
 
   createOrderList(body: any): Promise<boolean> {
@@ -154,6 +159,16 @@ export class ApiService {
       this.http.post(`${apiHost}/getRawList`, body, this.header).subscribe((res: any) => {
         console.log('raw materials', res.data);
           resolve(res.data);
+
+        })
+      })
+    }
+
+  getOrdersByCalendarCtl(body: any): Promise<Preorder[]> {
+    return new Promise((resolve, reject) => {
+      this.http.post(`${apiHost}/calendarControl`, body, this.header).subscribe((res: any) => {
+        console.log('by calendar ctl >>', res.filtered_data);
+        resolve(res.filtered_data);
       })
     })
   }

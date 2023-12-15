@@ -125,9 +125,21 @@ export class AdminTableComponent {
     total_price: 0,
     total_qty: 0
   }
+  filter: any = {
+    startDate: '',
+    endDate: '',
+    dept: 'admin'
+  }
 
   ngOnInit() {
     this.loadPreorderData();
+  }
+
+  async filterByDate() {
+    if (this.filter.startDate != '' && this.filter.endDate != '') {
+      this.preorders = await this.api.getOrdersByCalendarCtl(this.filter);
+      this.dataSource = new MatTableDataSource(this.preorders);
+    }
   }
 
   async loadPreorderData() {

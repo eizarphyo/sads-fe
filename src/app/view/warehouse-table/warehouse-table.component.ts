@@ -125,9 +125,22 @@ export class WarehouseTableComponent {
   dataSource = new MatTableDataSource(this.preorders);
   role: string = '';
 
+  filter: any = {
+    startDate: '',
+    endDate: '',
+    dept: 'admin'
+  }
+
   ngOnInit() {
     this.role = sessionStorage.getItem('role')!;
     this.loadPreorderData();
+  }
+
+  async filterByDate() {
+    if (this.filter.startDate != '' && this.filter.endDate != '') {
+      this.preorders = await this.api.getOrdersByCalendarCtl(this.filter);
+      this.dataSource = new MatTableDataSource(this.preorders);
+    }
   }
 
   async loadPreorderData() {
